@@ -32,7 +32,10 @@ Object.defineProperties(GameRootSprite.prototype, {
     deactivate: {
         value: function deactivate(activationContext) {
             if (this.gameObject) {
-                this.gameObject.deactivate(activationContext);
+                return this.gameObject.deactivate(activationContext);
+            }
+            else {
+                return true;
             }
         }
     },

@@ -61,6 +61,8 @@
     <Content Include="images\stock\square.png" />
     <Content Include="js\ClickSequence\ClickSequenceGame.js" />
     <Content Include="js\ClickSequence\ClickSequenceSprite.js" />
+    <Content Include="js\ColorPair\ColorPairGame.js" />
+    <Content Include="js\ColorPair\ColorPairSprite.js" />
     <Content Include="js\Game.js" />
     <Content Include="js\GameHostSprite.js" />
     <Content Include="js\GameRootSprite.js" />

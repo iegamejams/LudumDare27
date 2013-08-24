@@ -88,4 +88,24 @@ Object.defineProperties(Sprite.prototype, {
             // sprites don't render, derived types should handle this.
         }
     },
+
+    hitTestRadius: {
+        value: function hitTestRadius(x, y, radius) {
+        }
+    },
+    hitTestSquare: {
+        value: function hitTestSquare(x, y, halfWidth) {
+            var childCount = this.children.length;
+            for (var i = childCount - 1; i >= 0; i--) {
+                var child = this.children[i];
+                if ((child.x - halfWidth) <= x &&
+                    (child.x + halfWidth) >= x &&
+                    (child.y - halfWidth) <= y &&
+                    (child.y + halfWidth) >= y) {
+                    return child;
+                }
+            }
+            return null;
+        }
+    }
 });
