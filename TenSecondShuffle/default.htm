@@ -40,19 +40,19 @@
         }
 
         function setupSpriteTree() {
-            var rootSprite = new Sprite(0, 0, null);
+            var rootSprite = new Sprite(0, 0);
             this.drawingContext.rootSprite = rootSprite;
 
             // Layer tree
-            rootSprite.addNamedChild("backgroundLayer", new Sprite(0, 0, null));
+            rootSprite.addNamedChild("backgroundLayer", new Sprite(0, 0));
 
             var activationContext = {
                 renderTargetElement: document.getElementById("renderTarget"),
                 menu: null,
                 services: null
             };
-            rootSprite.addNamedChild("gameHostLayer", new GameHostSprite(activationContext, 0, 0));
-            rootSprite.addNamedChild("hudLayer", new Sprite(0, 0, null));
+            rootSprite.addNamedChild("gameHostLayer", new Sprite(0, 0));
+            rootSprite.addNamedChild("hudLayer", new Sprite(0, 0));
 
             // Background Layer Setup
 
@@ -60,7 +60,17 @@
             this.hudElement = new ImageSprite(this.drawingContext.width / 2, this.drawingContext.height / 2, this.imgSquare);
             rootSprite.hudLayer.addChild(this.hudElement);
 
+            // Game Switcher Setup, lower pivot is rotated, upper pivot is offset back to center y, game host root is offset back to top left 0 point.
+            var gameLowerPivot = new Sprite(this.drawingContext.width / 2, this.drawingContext.height * 3);
+            var gameUpperPivot = new Sprite(0, -gameLowerPivot.y);
+            var gameHostRoot = new Sprite(-gameLowerPivot.x, 0);
+
+            rootSprite.gameHostLayer.addNamedChild("pivot", gameLowerPivot);
+            gameLowerPivot.addChild(gameUpperPivot);
+            gameUpperPivot.addChild(gameHostRoot);
+
             // Game Setup
+            gameHostRoot.addNamedChild("GameHost", new GameHostSprite(activationContext, 0, 0));
             for (var i = 0; i < games.length; i++) {
                 var gameDescriptor = games[i];
 
@@ -73,7 +83,7 @@
                 gameDescriptor.instance.init();
 
                 // Attach the game root sprite to the game host sprite
-                rootSprite.gameHostLayer.addChild(gameDescriptor.rootSprite);
+                gameHostRoot.GameHost.addChild(gameDescriptor.rootSprite);
             }
         }
 
@@ -85,12 +95,14 @@
         }
 
         function update() {
+            drawingContext.rootSprite.gameHostLayer.pivot.rotation = Math.sin(new Date() / 1000) * Math.PI / 24;
+
 
             // Pass updates through the visual sprite tree, a GameRootSprite will talk to the game itself.
-            this.drawingContext.rootSprite.hudLayer.x = Math.cos(new Date() / 1000) * 100;
-            this.drawingContext.rootSprite.hudLayer.y = Math.sin(new Date() / 1000) * 100;
+            drawingContext.rootSprite.hudLayer.x = Math.cos(new Date() / 1000) * 100;
+            drawingContext.rootSprite.hudLayer.y = Math.sin(new Date() / 1000) * 100;
 
-            this.drawingContext.rootSprite.update();
+            drawingContext.rootSprite.update();
         }
 
         function draw() {
