@@ -13,6 +13,18 @@ Sprite.prototype = Object.create(null);
 Sprite.prototype.constructor = Sprite;
 
 Object.defineProperties(Sprite.prototype, {
+    addNamedChild: {
+        value: function addNamedChild(name, child) {
+            if (!this[name]) {
+                this.addChild(child);
+                child.name = name;
+                this[name] = child;
+            }
+            else {
+                throw new Error("Named child " + name + " already exists.");
+            }
+        }
+    },
     addChild: {
         value: function addChild(child) {
             if (child.parent) {
@@ -27,8 +39,14 @@ Object.defineProperties(Sprite.prototype, {
             if (child.parent !== this) {
                 throw new Error("Can't remove child from this sprite as this is not the correct parent.");
             }
+
+            if (child.name) {
+                delete this[child.name];
+            }
+
             this.children.splice(this.children.indexOf(child), 1);
             child.parent = null;
+            child.name = undefined;
         }
     },
 
