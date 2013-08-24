@@ -3,18 +3,27 @@
 <head>
     <title>Ten Second Shuffle</title>
 
+    <!-- Global RuleSet Definitions -->
+    <script src="js/GlobalRuleSet.js" type="text/ecmascript"></script>
+
+    <!-- Graphics Engine and Sprite Tree -->
     <script src="js/DrawingContext2D.js" type="text/ecmascript"></script>
     <script src="js/Sprite.js" type="text/ecmascript"></script>
+    <script src="js/GameHostSprite.js" type="text/ecmascript"></script>
     <script src="js/GameRootSprite.js" type="text/ecmascript"></script>
     <script src="js/FrameSprite.js" type="text/ecmascript"></script>
     <script src="js/ImageSprite.js" type="text/ecmascript"></script>
 
-    <!-- Games -->
+    <!-- Game Common -->
     <script src="js/Game.js" type="text/ecmascript"></script>
+
+    <!-- Click Sequence Game -->
+    <script src="js/ClickSequence/ClickSequenceGame.js" type="text/ecmascript"></script>
+    <script src="js/ClickSequence/ClickSequenceSprite.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
-            // { id: "Ball Breaker", constructor: BallBreaker, instance: null, rootSprite: null },
+            { id: "Click Sequence", constructor: ClickSequenceGame, instance: null, rootSprite: null },
             // { id: "Block Breaker", constructor: BlockBreaker, instance: null, rootSprite: null },
             // { id: "Arkanoid", constructor: Arkanoid, instance: null, rootSprite: null }
         ];
@@ -36,7 +45,13 @@
 
             // Layer tree
             rootSprite.addNamedChild("backgroundLayer", new Sprite(0, 0, null));
-            rootSprite.addNamedChild("gameHostLayer", new Sprite(0, 0, null));
+
+            var activationContext = {
+                renderTargetElement: document.getElementById("renderTarget"),
+                menu: null,
+                services: null
+            };
+            rootSprite.addNamedChild("gameHostLayer", new GameHostSprite(activationContext, 0, 0));
             rootSprite.addNamedChild("hudLayer", new Sprite(0, 0, null));
 
             // Background Layer Setup
@@ -48,9 +63,17 @@
             // Game Setup
             for (var i = 0; i < games.length; i++) {
                 var gameDescriptor = games[i];
+
+                // Connect the game descriptor to a root sprite and and game instance
                 gameDescriptor.rootSprite = new GameRootSprite(0, 0);
                 gameDescriptor.instance = new gameDescriptor.constructor(gameDescriptor.rootSprite);
+
+                // Initialize the game root sprite and game
                 gameDescriptor.rootSprite.init(gameDescriptor.instance);
+                gameDescriptor.instance.init();
+
+                // Attach the game root sprite to the game host sprite
+                rootSprite.gameHostLayer.addChild(gameDescriptor.rootSprite);
             }
         }
 

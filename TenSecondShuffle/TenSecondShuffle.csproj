@@ -59,11 +59,15 @@
   <ItemGroup>
     <Content Include="default.htm" />
     <Content Include="images\stock\square.png" />
+    <Content Include="js\ClickSequence\ClickSequenceGame.js" />
+    <Content Include="js\ClickSequence\ClickSequenceSprite.js" />
     <Content Include="js\Game.js" />
+    <Content Include="js\GameHostSprite.js" />
     <Content Include="js\GameRootSprite.js" />
     <Content Include="js\GameTemplate.js" />
     <Content Include="js\DrawingContext2D.js" />
     <Content Include="js\FrameSprite.js" />
+    <Content Include="js\GlobalRuleSet.js" />
     <Content Include="js\ImageSprite.js" />
     <Content Include="js\Sprite.js" />
     <Content Include="Web.config" />

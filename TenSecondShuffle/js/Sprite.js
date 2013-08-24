@@ -49,9 +49,25 @@ Object.defineProperties(Sprite.prototype, {
             child.name = undefined;
         }
     },
+    removeAllChildren: {
+        value: function removeAllChildren() {
+            var childCount = this.children.length;
+            for (var i = 0; i < childCount; i++) {
+                var child = this.children[i];
+                if (child.name) {
+                    delete this[child.name];
+                }
+            }
+            this.children = [];
+        }
+    },
 
     update: {
         value: function update() {
+            var childCount = this.children.length;
+            for (var i = 0; i < childCount; i++) {
+                this.children[i].update();
+            }
         }
     },
     draw: {
