@@ -58,6 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="default.htm" />
+    <Content Include="images\stock\square.png" />
+    <Content Include="js\DrawingContext2D.js" />
+    <Content Include="js\FrameSprite.js" />
+    <Content Include="js\ImageSprite.js" />
+    <Content Include="js\Sprite.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +75,10 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="css\" />
+    <Folder Include="sound\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

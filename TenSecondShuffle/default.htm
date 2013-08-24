@@ -2,8 +2,73 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Ten Second Shuffle</title>
+
+    <script src="js/DrawingContext2D.js" type="text/ecmascript"></script>
+    <script src="js/Sprite.js" type="text/ecmascript"></script>
+    <script src="js/FrameSprite.js" type="text/ecmascript"></script>
+    <script src="js/ImageSprite.js" type="text/ecmascript"></script>
+
+    <script>
+        var games = [
+            // { id: "Ball Breaker", constructor: BallBreaker, instance: null, rootSprite: null },
+            //{ id: "Block Breaker", constructor: BlockBreaker, instance: null, rootSprite: null },
+        ];
+        var drawingContext;
+
+        function init() {
+            var target = document.getElementById("renderTarget");
+            drawingContext = new DrawingContext2D(target);
+
+            setupSpriteTree();
+
+            requestAnimationFrame(render);
+        }
+
+        function setupSpriteTree() {
+            var rootSprite = new Sprite(0, 0, null);
+
+            rootSprite.backgroundLayer = new Sprite(0, 0, null);
+            rootSprite.gameHostLayer = new Sprite(0, 0, null);
+            rootSprite.hudLayer = new Sprite(0, 0, null);
+
+            var hudElement = new ImageSprite(drawingContext.width / 2, drawingContext.height / 2, document.getElementById("imgSquare"));
+            rootSprite.hudLayer.addChild(hudElement);
+
+            rootSprite.addChild(rootSprite.hudLayer);
+            drawingContext.rootSprite = rootSprite;
+        }
+
+        function render() {
+            update();
+            draw();
+
+            requestAnimationFrame(render);
+        }
+
+        function update() {
+            drawingContext.rootSprite.hudLayer.x = Math.cos(new Date() / 1000) * 100;
+            drawingContext.rootSprite.hudLayer.y = Math.sin(new Date() / 1000) * 100;
+
+            drawingContext.rootSprite.update();
+        }
+
+        function draw() {
+            drawingContext.beginDraw();
+            drawingContext.clear();
+            drawingContext.rootSprite.draw(drawingContext);
+            drawingContext.endDraw();
+        }
+    </script>
 </head>
-<body>
-    Welcome to Ludum Dare 27 and Ten Second Shuffle
+<body onload="init();">
+    <h1>
+        <center>Welcome to Ludum Dare 27 and Ten Second Shuffle</center>
+    </h1>
+
+    <canvas id="renderTarget" width="1024" height="768" style="background-color: white;"></canvas>
+
+    <div style="display: none">
+        <img id="imgSquare" src="images/stock/square.png" />
+    </div>
 </body>
 </html>
