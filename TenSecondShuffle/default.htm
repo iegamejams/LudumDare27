@@ -8,34 +8,37 @@
     <script src="js/FrameSprite.js" type="text/ecmascript"></script>
     <script src="js/ImageSprite.js" type="text/ecmascript"></script>
 
+    <!-- Games -->
+    <script src="js/Arkanoid.js" type="text/ecmascript"></script>
+
     <script>
         var games = [
             // { id: "Ball Breaker", constructor: BallBreaker, instance: null, rootSprite: null },
             //{ id: "Block Breaker", constructor: BlockBreaker, instance: null, rootSprite: null },
+            { id: "Arkanoid", constructor: Arkanoid, instance: null, rootSprite: null }
         ];
+
         var drawingContext;
+        var curGameId = 0;      // Current playable game.
 
         function init() {
-            var target = document.getElementById("renderTarget");
-            drawingContext = new DrawingContext2D(target);
-
+            // Constructor call on all games.
+            for (var i = 0; i < games.length; ++i) {
+                games[i].instance = new games[i].constructor();
+            }
             setupSpriteTree();
-
             requestAnimationFrame(render);
         }
 
         function setupSpriteTree() {
-            var rootSprite = new Sprite(0, 0, null);
+            // Render target for all games.
+            target = document.getElementById("renderTarget");
 
-            rootSprite.backgroundLayer = new Sprite(0, 0, null);
-            rootSprite.gameHostLayer = new Sprite(0, 0, null);
-            rootSprite.hudLayer = new Sprite(0, 0, null);
-
-            var hudElement = new ImageSprite(drawingContext.width / 2, drawingContext.height / 2, document.getElementById("imgSquare"));
-            rootSprite.hudLayer.addChild(hudElement);
-
-            rootSprite.addChild(rootSprite.hudLayer);
-            drawingContext.rootSprite = rootSprite;
+            // Initialize all games.
+            for (var i = 0; i < games.length; ++i) {
+                games[i].instance.init(target);
+                games[i].instance.setupGame();
+            }
         }
 
         function render() {
@@ -46,17 +49,12 @@
         }
 
         function update() {
-            drawingContext.rootSprite.hudLayer.x = Math.cos(new Date() / 1000) * 100;
-            drawingContext.rootSprite.hudLayer.y = Math.sin(new Date() / 1000) * 100;
 
-            drawingContext.rootSprite.update();
+            games[curGameId].instance.update();
         }
 
         function draw() {
-            drawingContext.beginDraw();
-            drawingContext.clear();
-            drawingContext.rootSprite.draw(drawingContext);
-            drawingContext.endDraw();
+            games[curGameId].instance.draw();
         }
     </script>
 </head>
