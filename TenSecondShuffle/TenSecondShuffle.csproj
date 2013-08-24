@@ -60,6 +60,7 @@
     <Content Include="default.htm" />
     <Content Include="images\stock\square.png" />
     <Content Include="js\Arkanoid.js" />
+    <Content Include="js\GameTemplate.js" />
     <Content Include="js\DrawingContext2D.js" />
     <Content Include="js\FrameSprite.js" />
     <Content Include="js\ImageSprite.js" />
