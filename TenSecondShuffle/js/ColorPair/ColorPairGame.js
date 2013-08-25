@@ -30,7 +30,7 @@ ColorPairGame.prototype.constructor = ColorPairGame;
     function _clickHandler(evt) {
         var hitSprite = this.rootSprite.hitTestSquare(evt.offsetX, evt.offsetY, 32);
         if (hitSprite) {
-            if (this.previousSprite) {
+            if (this.previousSprite && this.previousSprite !== hitSprite) {
                 if (hitSprite.color === this.previousSprite.color) {
                     this.rootSprite.removeChild(hitSprite);
                     this.rootSprite.removeChild(this.previousSprite);

@@ -10,5 +10,10 @@ Object.defineProperties(Math, {
         value: function randomIntInRange(min, max) {
             return Math.floor((Math.random() * (max - min + 1)) + min);
         }
+    },
+    randomIntIndex: {
+        value: function randomIntIndex(length) {
+            return Math.floor(Math.random() * length);
+        }
     }
 });

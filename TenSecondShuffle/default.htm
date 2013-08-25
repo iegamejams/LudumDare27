@@ -17,6 +17,7 @@
     <script src="js/ImageSprite.js" type="text/ecmascript"></script>
     <script src="js/CircleSprite.js" type="text/ecmascript"></script>
     <script src="js/DashedCircleSprite.js" type="text/ecmascript"></script>
+    <script src="js/TextSprite.js" type="text/ecmascript"></script>
 
     <!-- Game Common -->
     <script src="js/Game.js" type="text/ecmascript"></script>
@@ -34,14 +35,37 @@
     
     <script>
         var games = [
-            { id: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
-            { id: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
-            { id: "Color Pair", factory: ColorPairGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
+            {
+                id: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null,
+                help: "Select the targets in increasing order.", titleImage: "imgSquare"
+            },
+            {
+                id: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null,
+                help: "Click or Tap to Blow a Bubble, but not too large.", titleImage: "imgSquare"
+            },
+            {
+                id: "Color Pair", factory: ColorPairGame, instance: null, rootSprite: null,
+                help: "Click or Tap pairs of the same color.", titleImage: "imgSquare"
+            },
         ];
 
         var drawingContext;
 
+        function applyRules() {
+            if (GlobalRuleSet.RandomizeGameOrder) {
+                var newGames = [].concat(games);
+                games = [];
+
+                while (newGames.length > 0) {
+                    var entry = Math.randomIntIndex(newGames.length);
+                    games.push(newGames.splice(entry, 1)[0]);
+                }
+            }
+        }
+
         function init() {
+            applyRules();
+
             drawingContext = new DrawingContext2D(document.getElementById("renderTarget"));
 
             // Builds out the base sprite tree which contains the background layers, game host and HUD.

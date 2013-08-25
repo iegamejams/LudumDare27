@@ -16,10 +16,26 @@ Object.defineProperties(this, {
                 },
 
                 GameWidth: {
-                    value: 700
+                    value: 600
                 },
                 GameHeight: {
-                    value: 700
+                    value: 600
+                },
+
+                TitleY: {
+                    value: 15
+                },
+                TitleFont: {
+                    value: "bold 18pt Calibri"
+                },
+                HelpTitleY: {
+                    value: 45
+                },
+                HelpTitleFont: {
+                    value: "italic bold 14pt Calibri"
+                },
+                RandomizeGameOrder: {
+                    value: true
                 },
             });
             Object.defineProperties(_globalRuleSet, {
