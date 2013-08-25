@@ -30,25 +30,23 @@ Object.defineProperties(GameRootSprite.prototype, {
         value: function draw(drawingContext) {
             if (this.activated) {
                 Sprite.prototype.draw.call(this, drawingContext);
-
-                if (!this.titleSprite) {
-                    this.titleSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.TitleY, this.gameObject.title, GlobalRuleSet.TitleFont);
-                    this.helpSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.HelpTitleY, this.gameObject.help, GlobalRuleSet.HelpTitleFont);
-                }
-                drawingContext.pushTransform(this);
-                this.titleSprite.draw(drawingContext);
-                this.helpSprite.draw(drawingContext);
-                drawingContext.popTransform();
             }
-            else {
+
+            if (!this.titleSprite) {
+                this.titleSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.TitleY, this.gameObject.title, GlobalRuleSet.TitleFont);
+                this.helpSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.HelpTitleY, this.gameObject.help, GlobalRuleSet.HelpTitleFont);
+            }
+            drawingContext.pushTransform(this);
+            if (!this.activated) {
                 // If we aren't activated then we can just show a simple overlay window instead.
-                drawingContext.pushTransform(this);
                 if (!this.titleImagesprite) {
                     this.titleImageSprite = new ImageSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, this.gameObject.titleImage);
                 }
                 this.titleImageSprite.draw(drawingContext);
-                drawingContext.popTransform(this);
             }
+            this.titleSprite.draw(drawingContext);
+            this.helpSprite.draw(drawingContext);
+            drawingContext.popTransform();
         }
     },
 

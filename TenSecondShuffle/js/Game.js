@@ -16,7 +16,7 @@ Object.defineProperties(Game.prototype, {
 
     init: {
         value: function init(gameDescriptor) {
-            this.title = gameDescriptor.id;
+            this.title = gameDescriptor.title;
             this.help = gameDescriptor.help;
             this.titleImage = gameDescriptor.titleImage;
         }

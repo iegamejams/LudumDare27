@@ -36,15 +36,15 @@
     <script>
         var games = [
             {
-                id: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null,
+                id: "clickseq", title: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null,
                 help: "Select the targets in increasing order.", titleImage: "imgSquare"
             },
             {
-                id: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null,
+                id: "bubbleblow", title: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null,
                 help: "Click or Tap to Blow a Bubble, but not too large.", titleImage: "imgSquare"
             },
             {
-                id: "Color Pair", factory: ColorPairGame, instance: null, rootSprite: null,
+                id: "colorpair", title: "Color Pair", factory: ColorPairGame, instance: null, rootSprite: null,
                 help: "Click or Tap pairs of the same color.", titleImage: "imgSquare"
             },
         ];
@@ -59,6 +59,17 @@
                 while (newGames.length > 0) {
                     var entry = Math.randomIntIndex(newGames.length);
                     games.push(newGames.splice(entry, 1)[0]);
+                }
+            }
+
+            if (GlobalRuleSet.Debug && window.location.hash.length > 0) {
+                var potentialGameId = window.location.hash.substr(1);
+                for (var i = 1; i < games.length; i++) {
+                    var game = games[i];
+                    if (game.id === potentialGameId) {
+                        games.unshift(games.splice(i, 1)[0]);
+                        break;
+                    }
                 }
             }
         }

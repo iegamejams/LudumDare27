@@ -37,6 +37,9 @@ Object.defineProperties(this, {
                 RandomizeGameOrder: {
                     value: true
                 },
+                Debug: {
+                    value: true
+                }
             });
             Object.defineProperties(_globalRuleSet, {
                 GameMinX: {
