@@ -32,7 +32,6 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
                     // now so that when the rendering occurs everything is reflected already.
                     this.area = Math.max(0, this.area - this.levelDescriptor.airLoss);
                     this.radius = Math.sqrt(this.area / Math.PI);
-                    console.log("Radius: " + this.radius);
 
                     var bubbleSprite = this.rootSprite.bubble;
 
@@ -75,7 +74,13 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
                 this.area = 0;
                 var bubbleSprite = new CircleSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, 0);
                 bubbleSprite.lineWidth = 3;
+
+                var targetSprite = new DashedCircleSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, this.levelDescriptor.pop);
+                targetSprite.fill = "transparent";
+                targetSprite.stroke = "red";
+
                 this.rootSprite.addNamedChild("bubble", bubbleSprite);
+                this.rootSprite.addChild(targetSprite);
 
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
             }
