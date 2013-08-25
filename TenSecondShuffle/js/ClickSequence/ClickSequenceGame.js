@@ -10,7 +10,12 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
 
 (function initialization_ClickSequenceGame() {
     var _levelDifficulty = [
-        5, 9, 13, 17, 20, 25
+        { sprites: 5, coverage: 0.3 },
+        { sprites: 8, coverage: 0.45 },
+        { sprites: 11, coverage: 0.55 },
+        { sprites: 14, coverage: 0.6 },
+        { sprites: 17, coverage: 0.7 },
+        { sprites: 20, coverage: 0.8 }
     ];
     var _maxLevels = _levelDifficulty.length;
     var _clickHandler = function click(evt) {
@@ -46,12 +51,15 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
             value: function activate(activationContext) {
                 this.level++;
                 var normalizedLevelDifficulty = Math.min(this.level - 1, _maxLevels - 1);
-                var spriteCount = _levelDifficulty[normalizedLevelDifficulty];
+                this.levelDescriptor = _levelDifficulty[normalizedLevelDifficulty];
 
                 // Build them in reverse order so they draw properly with lower numbers on top and simplified hit testing.
-                for (var i = spriteCount; i > 0; i--) {
-                    var x = Math.random() * GlobalRuleSet.GameWidth + GlobalRuleSet.GameMinX;
-                    var y = Math.random() * GlobalRuleSet.GameHeight + GlobalRuleSet.GameMinY;
+                var coverageX = GlobalRuleSet.GameWidth * this.levelDescriptor.coverage / 2;
+                var coverageY = GlobalRuleSet.GameHeight * this.levelDescriptor.coverage / 2;
+
+                for (var i = this.levelDescriptor.sprites; i > 0; i--) {
+                    var x = GlobalRuleSet.GameCenterX + Math.randomIntInRange(-coverageX, coverageX);
+                    var y = GlobalRuleSet.GameCenterY + Math.randomIntInRange(-coverageY, coverageY);
 
                     var sprite = new ClickSequenceSprite(i, x, y);
                     this.rootSprite.addChild(sprite);

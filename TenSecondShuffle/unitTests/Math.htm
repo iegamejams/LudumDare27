@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../js/Math.js" type="text/ecmascript"></script>
+
+    <script type="text/ecmascript">
+        function runTests() {
+            for (var i = 0; i < tests.length; i++) {
+                tests[i]();
+            }
+        }
+
+        function testrandomFloatInRange() {
+            for (var i = 0; i < 100000; i++) {
+                var value = Math.randomFloatInRange(20, 25);
+                if (value < 20 || value >= 25) {
+                    alert(value);
+                }
+            }
+            console.log("Test Complete: testrandomFloatInRange");
+        }
+        function testrandomIntInRange() {
+            var fSeen20 = false;
+            var fSeen25 = false;
+            for (var i = 0; i < 100000; i++) {
+                var value = Math.randomIntInRange(20, 25);
+                if (value < 20 || value > 25) {
+                    console.error(value);
+                }
+                else if (value === 20) {
+                    fSeen20 = true;
+                }
+                else if (value === 25) {
+                    fSeen25 = true;
+                }
+            }
+            if (!fSeen20 || !fSeen25) {
+                console.error("Value missing");
+            }
+            console.log("Test Complete: testrandomIntInRange");
+        }
+
+        var tests = [
+            testrandomFloatInRange,
+            testrandomIntInRange
+        ];
+    </script>
+</head>
+<body onload="runTests();">
+
+</body>
+</html>

@@ -4,6 +4,8 @@
     <title>Ten Second Shuffle</title>
 
     <!-- Global RuleSet Definitions -->
+    <script src="js/BrowserPolyFills.js" type="text/ecmascript"></script>
+    <script src="js/Math.js" type="text/ecmascript"></script>
     <script src="js/GlobalRuleSet.js" type="text/ecmascript"></script>
 
     <!-- Graphics Engine and Sprite Tree -->
@@ -32,8 +34,8 @@
     
     <script>
         var games = [
-            { id: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
             { id: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
+            { id: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
             { id: "Color Pair", factory: ColorPairGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
         ];
 

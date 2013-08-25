@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="default.htm" />
     <Content Include="images\stock\square.png" />
+    <Content Include="js\BrowserPolyFills.js" />
     <Content Include="js\BubbleBlower\BubbleBlowerGame.js" />
     <Content Include="js\CircleSprite.js" />
     <Content Include="js\ClickSequence\ClickSequenceGame.js" />
@@ -73,8 +74,10 @@
     <Content Include="js\FrameSprite.js" />
     <Content Include="js\GlobalRuleSet.js" />
     <Content Include="js\ImageSprite.js" />
+    <Content Include="js\Math.js" />
     <Content Include="js\Sprite.js" />
     <Content Include="js\Templates\GameTemplate.js" />
+    <Content Include="unitTests\Math.htm" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
