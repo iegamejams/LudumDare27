@@ -60,15 +60,7 @@ GameHostSprite.prototype.constructor = GameHostSprite;
 
                 // Setup easy access from the pivot to the game root sprite for activation.
                 gamePivotSprite.gameRootSprite = gameDescriptor.rootSprite;
-
-                // Reoffset the wheel based on this new information
-                var childCount = this.mainPivot.children.length;
-                if (childCount > 1) {
-                    this.arcPerGame = Math.PI * 2 / childCount;
-                    for (var i = 1; i < childCount; i++) {
-                        this.mainPivot.children[i].rotation = -(this.arcPerGame * i);
-                    }
-                }
+                gamePivotSprite.rotation = Math.PI;
             }
         },
 
@@ -99,6 +91,7 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                                         this.transitionTo(HostState.GAMESWITCH);
                                     }
                                     else {
+                                        this.mainPivot.children[this.currentGame].rotation = 0;
                                         this.transitionTo(HostState.COUNTDOWN);
                                     }
                                 }
@@ -116,10 +109,11 @@ GameHostSprite.prototype.constructor = GameHostSprite;
 
                     case HostState.GAMESWITCH:
                         {
-                            var currentRotation = Math.min(this.targetArc, this.mainPivot.rotation + (this.arcPerGame / 80));
+                            var currentRotation = Math.max(this.targetArc, this.mainPivot.rotation - GlobalRuleSet.ClockRotation * .1);
                             if (this.targetArc == currentRotation) {
                                 this.transitionTo(HostState.COUNTDOWN);
                             }
+                            this.clockPivot.rotation -= GlobalRuleSet.ClockRotation * .1;
                             this.mainPivot.rotation = currentRotation;
                         }
                         break;
@@ -145,6 +139,9 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         {
                             this.startCountdownTimer = new Date();
                             this.clockPivot.rotation = -(GlobalRuleSet.ClockRotation * 5);
+
+                            var nextGame = (this.currentGame + 1) % this.mainPivot.children.length;
+                            this.mainPivot.children[nextGame].rotation = -(this.mainPivot.rotation - GlobalRuleSet.ClockRotation * 10);
                         }
                         break;
                     case HostState.GAMERUNNING:
@@ -155,7 +152,11 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         break;
                     case HostState.GAMESWITCH:
                         {
-                            this.targetArc = this.mainPivot.rotation + this.arcPerGame;
+                            this.targetArc = this.mainPivot.rotation - (GlobalRuleSet.ClockRotation * 10);
+                            this.mainPivot.children[this.currentGame].rotation = -this.targetArc;
+                            
+                            var nextGame = (this.currentGame + 1) % this.mainPivot.children.length;
+                            this.mainPivot.children[nextGame].rotation = -(this.targetArc - GlobalRuleSet.ClockRotation * 10);
                         }
                         break;
                 }
@@ -171,10 +172,7 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         {
                             drawingContext.pushTransform(this);
 
-                            if (this.state === HostState.GAMERUNNING || this.state === HostState.COUNTDOWN) {
-                            }
                             this.clockPivot.draw(drawingContext);
-
                             this.drawGameCore(drawingContext);
 
                             if (this.state === HostState.COUNTDOWN) {

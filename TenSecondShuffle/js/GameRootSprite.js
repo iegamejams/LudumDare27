@@ -4,7 +4,6 @@ function GameRootSprite(x, y) {
     Sprite.call(this, x, y);
 
     this.activated = false;
-    this.titleImageSprite;
     this.titleSprite;
     this.helpSprite;
 }
@@ -23,27 +22,16 @@ Object.defineProperties(GameRootSprite.prototype, {
     init: {
         value: function init(gameObject) {
             this.gameObject = gameObject;
+            this.titleSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.TitleY, this.gameObject.title, GlobalRuleSet.TitleFont);
+            this.helpSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.HelpTitleY, this.gameObject.help, GlobalRuleSet.HelpTitleFont);
         }
     },
 
     draw: {
         value: function draw(drawingContext) {
-            if (this.activated) {
-                Sprite.prototype.draw.call(this, drawingContext);
-            }
+            Sprite.prototype.draw.call(this, drawingContext);
 
-            if (!this.titleSprite) {
-                this.titleSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.TitleY, this.gameObject.title, GlobalRuleSet.TitleFont);
-                this.helpSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.HelpTitleY, this.gameObject.help, GlobalRuleSet.HelpTitleFont);
-            }
             drawingContext.pushTransform(this);
-            if (!this.activated) {
-                // If we aren't activated then we can just show a simple overlay window instead.
-                if (!this.titleImagesprite) {
-                    this.titleImageSprite = new ImageSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, this.gameObject.titleImage);
-                }
-                this.titleImageSprite.draw(drawingContext);
-            }
             this.titleSprite.draw(drawingContext);
             this.helpSprite.draw(drawingContext);
             drawingContext.popTransform();
@@ -53,6 +41,7 @@ Object.defineProperties(GameRootSprite.prototype, {
         value: function drawCore(drawingContext) {
             drawingContext.ctx.strokeStyle = "black";
             drawingContext.ctx.strokeRect(GlobalRuleSet.GameMinX, GlobalRuleSet.GameMinY, GlobalRuleSet.GameWidth, GlobalRuleSet.GameHeight);
+            drawingContext.ctx.fillRect(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameMinY + GlobalRuleSet.GameHeight, 1, GlobalRuleSet.GameHostHeight - GlobalRuleSet.GameHeight);
         }
     },
 

@@ -129,8 +129,8 @@
                 gameDescriptor.instance = new gameDescriptor.factory(gameDescriptor.rootSprite);
 
                 // Initialize the game root sprite and game
-                gameDescriptor.rootSprite.init(gameDescriptor.instance);
                 gameDescriptor.instance.init(gameDescriptor);
+                gameDescriptor.rootSprite.init(gameDescriptor.instance);
 
                 // Attach the game root sprite to the game host sprite
                 rootSprite.gameHostLayer.gameHost.addGame(gameDescriptor);
