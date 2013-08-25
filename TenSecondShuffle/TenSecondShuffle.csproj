@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="css\default.css" />
     <Content Include="default.htm" />
+    <Content Include="images\background_layer\clock_hand.png" />
     <Content Include="images\background_layer\time_background.jpg" />
     <Content Include="images\background_layer\time_background2.jpg" />
     <Content Include="images\stock\square.png" />

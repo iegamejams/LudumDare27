@@ -49,6 +49,12 @@ Object.defineProperties(GameRootSprite.prototype, {
             drawingContext.popTransform();
         }
     },
+    drawCore: {
+        value: function drawCore(drawingContext) {
+            drawingContext.ctx.strokeStyle = "black";
+            drawingContext.ctx.strokeRect(GlobalRuleSet.GameMinX, GlobalRuleSet.GameMinY, GlobalRuleSet.GameWidth, GlobalRuleSet.GameHeight);
+        }
+    },
 
     activate: {
         value: function activate(activationContext) {

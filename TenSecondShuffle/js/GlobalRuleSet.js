@@ -5,6 +5,9 @@ Object.defineProperties(this, {
         value: (function singleton_GlobalRuleSet() {
             var _globalRuleSet = {};
             Object.defineProperties(_globalRuleSet, {
+                GAME_SWITCH_FRAMES_PER_SECOND: {
+                    value: 60
+                },
                 GAME_SWITCH_FRAMES: {
                     value: 60 * 10 // 60 frames times 10 seconds
                 },
@@ -22,6 +25,10 @@ Object.defineProperties(this, {
                     value: 600
                 },
 
+                ClockRotation: {
+                    value: Math.PI / 65
+                },
+
                 TitleY: {
                     value: 15
                 },
@@ -34,6 +41,7 @@ Object.defineProperties(this, {
                 HelpTitleFont: {
                     value: "italic bold 14pt Calibri"
                 },
+
                 RandomizeGameOrder: {
                     value: true
                 },

@@ -3,9 +3,18 @@
 function GameHostSprite(activationContext, x, y) {
     Sprite.call(this, x, y);
 
+    // Set up the game host's main UI components
     this.addNamedChild("mainPivot", new Sprite(GlobalRuleSet.GameHostWidth / 2, GlobalRuleSet.GameHostHeight * 3));
+    this.addNamedChild("clockPivot", new Sprite(this.mainPivot.x, this.mainPivot.y));
     this.addNamedChild("countdownTimer", new OverlaySprite("rgba(0, 0, 0, 0.2)"));
+
+    // Set up the countdown timer components
     this.countdownTimer.addNamedChild("timer", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, "", "bold 18pt Calibri"));
+
+    // Set up the clock's image sprite.
+    this.clockPivot.addNamedChild("clockArm", new ImageSprite(0, -GlobalRuleSet.GameHostHeight * 2.25, document.getElementById("imgClockHand")));
+    // this.clockPivot.clockArm.scale = 1;
+
     this.activationContext = activationContext;
     this.reset();
 }
@@ -69,6 +78,11 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                     case HostState.INITIAL:
                     case HostState.GAMERUNNING:
                         {
+                            if (this.state === HostState.GAMERUNNING) {
+                                if (this.currentFrame % GlobalRuleSet.GAME_SWITCH_FRAMES_PER_SECOND === 0) {
+                                    this.clockPivot.rotation += GlobalRuleSet.ClockRotation;
+                                }
+                            }
                             if (this.currentFrame % GlobalRuleSet.GAME_SWITCH_FRAMES === 0) {
                                 var canContinue = true;
                                 var canSwitch = false;
@@ -130,11 +144,13 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                     case HostState.COUNTDOWN:
                         {
                             this.startCountdownTimer = new Date();
+                            this.clockPivot.rotation = -(GlobalRuleSet.ClockRotation * 5);
                         }
                         break;
                     case HostState.GAMERUNNING:
                         {
                             this.mainPivot.children[this.currentGame].gameRootSprite.inputActivate(this.activationContext);
+                            this.startClockFrames = this.currentFrame;
                         }
                         break;
                     case HostState.GAMESWITCH:
@@ -155,8 +171,11 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         {
                             drawingContext.pushTransform(this);
 
+                            if (this.state === HostState.GAMERUNNING || this.state === HostState.COUNTDOWN) {
+                            }
+                            this.clockPivot.draw(drawingContext);
+
                             this.drawGameCore(drawingContext);
-                            this.drawCore(drawingContext);
 
                             if (this.state === HostState.COUNTDOWN) {
                                 this.drawCountdownTimer(drawingContext);
@@ -188,12 +207,6 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                 mainPivot.children[nextGame].draw(drawingContext);
 
                 drawingContext.popTransform();
-            }
-        },
-        drawCore: {
-            value: function drawCore(drawingContext) {
-                drawingContext.ctx.strokeStyle = "black";
-                drawingContext.ctx.strokeRect(GlobalRuleSet.GameMinX, GlobalRuleSet.GameMinY, GlobalRuleSet.GameWidth, GlobalRuleSet.GameHeight);
             }
         },
     });
