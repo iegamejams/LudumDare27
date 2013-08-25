@@ -115,25 +115,32 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                     case HostState.GAMERUNNING:
                     case HostState.GAMESWITCH:
                         {
-                            var mainPivot = this.mainPivot;
-                            var games = mainPivot.children.length;
-
-                            var previousGame = (this.currentGame + games - 1) % games;
-                            var nextGame = (this.currentGame + 1) % games;
-
                             drawingContext.pushTransform(this);
-                            drawingContext.pushTransform(mainPivot);
 
-                            mainPivot.children[previousGame].draw(drawingContext);
-                            mainPivot.children[this.currentGame].draw(drawingContext);
-                            mainPivot.children[nextGame].draw(drawingContext);
+                            this.drawGameCore(drawingContext);
                             this.drawCore(drawingContext);
 
-                            drawingContext.popTransform();
                             drawingContext.popTransform();
                         }
                         break;
                 }
+            }
+        },
+        drawGameCore: {
+            value: function drawGameCore(drawingContext) {
+                var mainPivot = this.mainPivot;
+                var games = mainPivot.children.length;
+
+                var previousGame = (this.currentGame + games - 1) % games;
+                var nextGame = (this.currentGame + 1) % games;
+
+                drawingContext.pushTransform(mainPivot);
+
+                mainPivot.children[previousGame].draw(drawingContext);
+                mainPivot.children[this.currentGame].draw(drawingContext);
+                mainPivot.children[nextGame].draw(drawingContext);
+
+                drawingContext.popTransform();
             }
         },
         drawCore: {
