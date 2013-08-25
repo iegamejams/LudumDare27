@@ -89,8 +89,20 @@ Object.defineProperties(Sprite.prototype, {
         }
     },
 
-    hitTestRadius: {
-        value: function hitTestRadius(x, y, radius) {
+    hitTestCircle: {
+        value: function hitTestCircle(x, y, radius) {
+            var childCount = this.children.length;
+            for (var i = childCount - 1; i >= 0; i--) {
+                var child = this.children[i];
+                var xDist = child.x - x;
+                var yDist = child.y - y;
+                var distance = Math.sqrt(xDist * xDist + yDist * yDist);
+
+                if (distance <= radius) {
+                    return child;
+                }
+            }
+            return null;
         }
     },
     hitTestSquare: {

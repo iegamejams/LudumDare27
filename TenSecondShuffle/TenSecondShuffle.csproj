@@ -59,6 +59,8 @@
   <ItemGroup>
     <Content Include="default.htm" />
     <Content Include="images\stock\square.png" />
+    <Content Include="js\BubbleBlower\BubbleBlowerGame.js" />
+    <Content Include="js\CircleSprite.js" />
     <Content Include="js\ClickSequence\ClickSequenceGame.js" />
     <Content Include="js\ClickSequence\ClickSequenceSprite.js" />
     <Content Include="js\ColorPair\ColorPairGame.js" />
@@ -66,12 +68,12 @@
     <Content Include="js\Game.js" />
     <Content Include="js\GameHostSprite.js" />
     <Content Include="js\GameRootSprite.js" />
-    <Content Include="js\GameTemplate.js" />
     <Content Include="js\DrawingContext2D.js" />
     <Content Include="js\FrameSprite.js" />
     <Content Include="js\GlobalRuleSet.js" />
     <Content Include="js\ImageSprite.js" />
     <Content Include="js\Sprite.js" />
+    <Content Include="js\Templates\GameTemplate.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

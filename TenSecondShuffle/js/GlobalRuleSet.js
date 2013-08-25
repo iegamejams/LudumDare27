@@ -30,6 +30,14 @@ Object.defineProperties(this, {
                     value: (_globalRuleSet.GameHostHeight - _globalRuleSet.GameHeight) / 2
                 }
             });
+            Object.defineProperties(_globalRuleSet, {
+                GameCenterX: {
+                    value: _globalRuleSet.GameWidth / 2 + _globalRuleSet.GameMinX
+                },
+                GameCenterY: {
+                    value: _globalRuleSet.GameHeight / 2 + _globalRuleSet.GameMinY
+                }
+            });
             return Object.freeze(_globalRuleSet);
         })()
     }

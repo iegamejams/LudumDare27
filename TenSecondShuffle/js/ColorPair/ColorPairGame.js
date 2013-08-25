@@ -20,15 +20,12 @@ ColorPairGame.prototype.constructor = ColorPairGame;
     var _maxLevels = _levelDifficulty.length;
     
     function _createColorSquare(gridSquares, currentColor) {
-        var centerX = GlobalRuleSet.GameWidth / 2 + GlobalRuleSet.GameMinX;
-        var centerY = GlobalRuleSet.GameHeight / 2 + GlobalRuleSet.GameMinY;
-
         var entry = Math.floor(Math.random() * gridSquares.length);
         var gridSquare = gridSquares.splice(entry, 1)[0];
         var gridX = gridSquare % 6;
         var gridY = Math.floor(gridSquare / 6);
 
-        return new ColorPairSprite(centerX - 250 + gridX * 100, centerY - 250 + gridY * 100, _colors[currentColor]);
+        return new ColorPairSprite(GlobalRuleSet.GameCenterX - 250 + gridX * 100, GlobalRuleSet.GameCenterY - 250 + gridY * 100, _colors[currentColor]);
     }
     function _clickHandler(evt) {
         var hitSprite = this.rootSprite.hitTestSquare(evt.offsetX, evt.offsetY, 32);

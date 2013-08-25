@@ -1,13 +1,15 @@
 ﻿"use strict";
 
 function ClickSequenceSprite(itemNumber, x, y) {
-    Sprite.call(this, x, y);
+    CircleSprite.call(this, x, y, 32);
 
     this.itemNumber = itemNumber;
-    this.radius = 32;
+    this.fill = "lightblue";
+    this.stroke = "darkblue";
+    this.lineWidth = 2;
 }
 
-ClickSequenceSprite.prototype = Object.create(Sprite.prototype);
+ClickSequenceSprite.prototype = Object.create(CircleSprite.prototype);
 ClickSequenceSprite.prototype.constructor = ClickSequenceSprite;
 
 Object.defineProperties(ClickSequenceSprite.prototype, {
@@ -15,12 +17,7 @@ Object.defineProperties(ClickSequenceSprite.prototype, {
         value: function drawCore(drawingCtx) {
             var ctx = drawingCtx.ctx; // Break of the isolation model, go directly to canvas 2D
 
-            ctx.beginPath();
-            ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
-            ctx.strokeStyle = "darkblue";
-            ctx.fillStyle = "lightblue";
-            ctx.fill();
-            ctx.stroke();
+            CircleSprite.prototype.drawCore.call(this, drawingCtx);
 
             ctx.font = "bold 12pt Courier New";
             if (!this._measuredText) {

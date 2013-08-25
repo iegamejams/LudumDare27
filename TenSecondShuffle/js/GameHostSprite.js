@@ -42,6 +42,9 @@ Object.defineProperties(GameHostSprite.prototype, {
                         this.disabled = true;
                     }
                 }
+                else {
+                    this.children[this.currentGame].update();
+                }
                 this.currentFrame++;
             }
         }

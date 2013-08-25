@@ -13,6 +13,7 @@
     <script src="js/GameRootSprite.js" type="text/ecmascript"></script>
     <script src="js/FrameSprite.js" type="text/ecmascript"></script>
     <script src="js/ImageSprite.js" type="text/ecmascript"></script>
+    <script src="js/CircleSprite.js" type="text/ecmascript"></script>
 
     <!-- Game Common -->
     <script src="js/Game.js" type="text/ecmascript"></script>
@@ -24,13 +25,15 @@
     <!-- Color Pairs Game -->
     <script src="js/ColorPair/ColorPairGame.js" type="text/ecmascript"></script>
     <script src="js/ColorPair/ColorPairSprite.js" type="text/ecmascript"></script>
+
+    <!-- Bubbler Blower Game-->
+    <script src="js/BubbleBlower/BubbleBlowerGame.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
-            { id: "Color Pair", constructor: ColorPairGame, instance: null, rootSprite: null },
             { id: "Click Sequence", constructor: ClickSequenceGame, instance: null, rootSprite: null },
-            // { id: "Block Breaker", constructor: BlockBreaker, instance: null, rootSprite: null },
-            // { id: "Arkanoid", constructor: Arkanoid, instance: null, rootSprite: null }
+            { id: "Bubble Blower", constructor: BubbleBlowerGame, instance: null, rootSprite: null },
+            { id: "Color Pair", constructor: ColorPairGame, instance: null, rootSprite: null },
         ];
 
         var drawingContext;
