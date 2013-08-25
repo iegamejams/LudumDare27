@@ -54,8 +54,9 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
         },
 
         init: {
-            value: function init() {
-                // This is called once at the beginning when we initialize all of the games currently. May get called more if we introduce a reset functionality to play more than once.
+            value: function init(gameDescriptor) {
+                Game.prototype.init.call(this, gameDescriptor);
+
                 this.area = 0;
                 this.radius = 0;
                 this.level = 0;

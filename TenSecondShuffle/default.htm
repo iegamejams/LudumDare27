@@ -32,9 +32,9 @@
     
     <script>
         var games = [
-            { id: "Bubble Blower", constructor: BubbleBlowerGame, instance: null, rootSprite: null },
-            { id: "Click Sequence", constructor: ClickSequenceGame, instance: null, rootSprite: null },
-            { id: "Color Pair", constructor: ColorPairGame, instance: null, rootSprite: null },
+            { id: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
+            { id: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
+            { id: "Color Pair", factory: ColorPairGame, instance: null, rootSprite: null, titleImage: "imgSquare" },
         ];
 
         var drawingContext;
@@ -68,29 +68,25 @@
             // Hud Layer Setup
 
             // Game Switcher Setup, lower pivot is rotated, upper pivot is offset back to center y, game host root is offset back to top left 0 point.
-            var gameLowerPivot = new Sprite(this.drawingContext.width / 2, this.drawingContext.height * 3);
-            var gameUpperPivot = new Sprite(0, -gameLowerPivot.y);
-            var gameHostRoot = new Sprite(-gameLowerPivot.x, 0);
-
-            rootSprite.gameHostLayer.addNamedChild("pivot", gameLowerPivot);
-            gameLowerPivot.addChild(gameUpperPivot);
-            gameUpperPivot.addChild(gameHostRoot);
+            rootSprite.gameHostLayer.addNamedChild("gameHost", new GameHostSprite(activationContext, 0, 0));
 
             // Game Setup
-            gameHostRoot.addNamedChild("GameHost", new GameHostSprite(activationContext, 0, 0));
             for (var i = 0; i < games.length; i++) {
                 var gameDescriptor = games[i];
 
+                // Connect the name to the actual image
+                gameDescriptor.titleImage = document.getElementById(gameDescriptor.titleImage);
+
                 // Connect the game descriptor to a root sprite and and game instance
                 gameDescriptor.rootSprite = new GameRootSprite(0, 0);
-                gameDescriptor.instance = new gameDescriptor.constructor(gameDescriptor.rootSprite);
+                gameDescriptor.instance = new gameDescriptor.factory(gameDescriptor.rootSprite);
 
                 // Initialize the game root sprite and game
                 gameDescriptor.rootSprite.init(gameDescriptor.instance);
-                gameDescriptor.instance.init();
+                gameDescriptor.instance.init(gameDescriptor);
 
                 // Attach the game root sprite to the game host sprite
-                gameHostRoot.GameHost.addChild(gameDescriptor.rootSprite);
+                rootSprite.gameHostLayer.gameHost.addGame(gameDescriptor);
             }
         }
 

@@ -2,6 +2,9 @@
 
 function GameRootSprite(x, y) {
     Sprite.call(this, x, y);
+
+    this.activated = false;
+    this.titleImageSprite;
 }
 
 GameRootSprite.prototype = Object.create(Sprite.prototype);
@@ -22,8 +25,27 @@ Object.defineProperties(GameRootSprite.prototype, {
         }
     },
 
+    draw: {
+        value: function draw(drawingContext) {
+            if (this.activated) {
+                Sprite.prototype.draw.call(this, drawingContext);
+            }
+            else {
+                // If we aren't activated then we can just show a simple overlay window instead.
+                drawingContext.pushTransform(this);
+                if (!this.titleImagesprite) {
+                    this.titleImageSprite = new ImageSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, this.gameObject.titleImage);
+                }
+                this.titleImageSprite.draw(drawingContext);
+                drawingContext.popTransform(this);
+            }
+        }
+    },
+
     activate: {
         value: function activate(activationContext) {
+            console.log("Activated: " + this.gameObject.constructor);
+            this.activated = true;
             if (this.gameObject) {
                 this.gameObject.activate(activationContext);
             }
@@ -31,6 +53,7 @@ Object.defineProperties(GameRootSprite.prototype, {
     },
     deactivate: {
         value: function deactivate(activationContext) {
+            this.activated = false;
             if (this.gameObject) {
                 return this.gameObject.deactivate(activationContext);
             }

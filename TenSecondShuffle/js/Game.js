@@ -2,6 +2,7 @@
 
 function Game(gameRootSprite) {
     this.rootSprite = gameRootSprite;
+    this.activated = false;
 }
 
 Game.prototype = Object.create(null);
@@ -14,18 +15,24 @@ Object.defineProperties(Game.prototype, {
     },
 
     init: {
-        value: function init() {
+        value: function init(gameDescriptor) {
+            this.title = gameDescriptor.id;
+            this.help = gameDescriptor.help;
+            this.titleImage = gameDescriptor.titleImage;
         }
     },
 
     activate: {
         value: function activate() {
+            this.activated = true;
             // Long running games will likely have additional state controlling where they are in the game.
             // Short running games will want to initialize their next level here.
         }
     },
     deactivate: {
         value: function deactivate() {
+            this.activated = false;
+
             // Long running games will likely ignore this state.
             // Short running games will clean up any resources they've allocated.
 

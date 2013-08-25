@@ -46,9 +46,10 @@ ColorPairGame.prototype.constructor = ColorPairGame;
             value: function update() {
             }
         },
-
         init: {
-            value: function init() {
+            value: function init(gameDescriptor) {
+                Game.prototype.init.call(this, gameDescriptor);
+
                 this.level = 0;
                 this.boundClick = _clickHandler.bind(this);
             }
