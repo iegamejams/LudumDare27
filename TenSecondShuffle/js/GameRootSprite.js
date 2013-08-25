@@ -59,6 +59,13 @@ Object.defineProperties(GameRootSprite.prototype, {
             }
         }
     },
+    inputActivate: {
+        value: function inputActivate(activationContext) {
+            if (this.gameObject) {
+                this.gameObject.inputActivate(activationContext);
+            }
+        }
+    },
     deactivate: {
         value: function deactivate(activationContext) {
             this.activated = false;

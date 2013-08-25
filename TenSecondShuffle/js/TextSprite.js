@@ -26,20 +26,22 @@ Object.defineProperties(TextSprite.prototype, {
     },
     drawCore: {
         value: function drawCore(drawingContext) {
-            var ctx = drawingContext.ctx;
+            if (this.text && this.text.length > 0) {
+                var ctx = drawingContext.ctx;
 
-            ctx.font = this.font;
-            if (!this._measureFont) {
-                this._textOffsetY = ctx.measureText("M").width / 2;
-                this._measureFont = true;
-            }
-            if (!this._measureText) {
-                this._textOffsetX = -ctx.measureText(this.text).width / 2;
-                this._measureText = true;
-            }
+                ctx.font = this.font;
+                if (!this._measureFont) {
+                    this._textOffsetY = ctx.measureText("M").width / 2;
+                    this._measureFont = true;
+                }
+                if (!this._measureText) {
+                    this._textOffsetX = -ctx.measureText(this.text).width / 2;
+                    this._measureText = true;
+                }
 
-            ctx.fillStyle = "black";
-            ctx.fillText(this.text, this._textOffsetX, this._textOffsetY);
+                ctx.fillStyle = "black";
+                ctx.fillText(this.text, this._textOffsetX, this._textOffsetY);
+            }
         }
     },
 });

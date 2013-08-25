@@ -64,7 +64,10 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
                     var sprite = new ClickSequenceSprite(i, x, y);
                     this.rootSprite.addChild(sprite);
                 }
-
+            }
+        },
+        inputActivate: {
+            value: function inputActivate(activationContext) {
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
             }
         },

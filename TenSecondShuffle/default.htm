@@ -3,6 +3,8 @@
 <head>
     <title>Ten Second Shuffle</title>
 
+    <link rel="stylesheet" href="css/default.css" />
+
     <!-- Global RuleSet Definitions -->
     <script src="js/BrowserPolyFills.js" type="text/ecmascript"></script>
     <script src="js/Math.js" type="text/ecmascript"></script>
@@ -18,6 +20,7 @@
     <script src="js/CircleSprite.js" type="text/ecmascript"></script>
     <script src="js/DashedCircleSprite.js" type="text/ecmascript"></script>
     <script src="js/TextSprite.js" type="text/ecmascript"></script>
+    <script src="js/OverlaySprite.js" type="text/ecmascript"></script>
 
     <!-- Game Common -->
     <script src="js/Game.js" type="text/ecmascript"></script>
@@ -154,7 +157,9 @@
         <center>Welcome to Ludum Dare 27 and Ten Second Shuffle</center>
     </h1>
 
-    <canvas id="renderTarget" width="1024" height="768" style="background-color: white;"></canvas>
+    <center>
+        <canvas id="renderTarget" width="1024" height="768"></canvas>
+    </center>
 
     <div style="display: none">
         <img id="imgSquare" src="images/stock/square.png" />

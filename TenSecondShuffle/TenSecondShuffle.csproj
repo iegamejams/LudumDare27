@@ -57,7 +57,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\default.css" />
     <Content Include="default.htm" />
+    <Content Include="images\background_layer\time_background.jpg" />
+    <Content Include="images\background_layer\time_background2.jpg" />
     <Content Include="images\stock\square.png" />
     <Content Include="js\BrowserPolyFills.js" />
     <Content Include="js\BubbleBlower\BubbleBlowerGame.js" />
@@ -75,9 +78,11 @@
     <Content Include="js\GlobalRuleSet.js" />
     <Content Include="js\ImageSprite.js" />
     <Content Include="js\Math.js" />
+    <Content Include="js\OverlaySprite.js" />
     <Content Include="js\Sprite.js" />
     <Content Include="js\Templates\GameTemplate.js" />
     <Content Include="js\TextSprite.js" />
+    <Content Include="sound\nyanlooped.mp3" />
     <Content Include="unitTests\Math.htm" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -93,8 +98,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="css\" />
-    <Folder Include="sound\" />
+    <Folder Include="js\FlyGuy\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

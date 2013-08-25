@@ -74,7 +74,10 @@ ColorPairGame.prototype.constructor = ColorPairGame;
 
                     currentColor = (currentColor + 1) % levelDescriptor.colors;
                 }
-
+            }
+        },
+        inputActivate: {
+            value: function inputActivate(activationContext) {
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
             }
         },

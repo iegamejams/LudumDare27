@@ -4,6 +4,8 @@ function GameHostSprite(activationContext, x, y) {
     Sprite.call(this, x, y);
 
     this.addNamedChild("mainPivot", new Sprite(GlobalRuleSet.GameHostWidth / 2, GlobalRuleSet.GameHostHeight * 3));
+    this.addNamedChild("countdownTimer", new OverlaySprite("rgba(0, 0, 0, 0.2)"));
+    this.countdownTimer.addNamedChild("timer", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, "", "bold 18pt Calibri"));
     this.activationContext = activationContext;
     this.reset();
 }
@@ -67,7 +69,6 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                     case HostState.INITIAL:
                     case HostState.GAMERUNNING:
                         {
-                            this.state = HostState.GAMERUNNING;
                             if (this.currentFrame % GlobalRuleSet.GAME_SWITCH_FRAMES === 0) {
                                 var canContinue = true;
                                 var canSwitch = false;
@@ -81,15 +82,18 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                                     this.mainPivot.children[this.currentGame].gameRootSprite.activate(this.activationContext);
 
                                     if (canSwitch) {
-                                        this.targetArc = this.mainPivot.rotation + this.arcPerGame;
-                                        this.state = HostState.GAMESWITCH;
+                                        this.transitionTo(HostState.GAMESWITCH);
+                                    }
+                                    else {
+                                        this.transitionTo(HostState.COUNTDOWN);
                                     }
                                 }
                                 else {
-                                    this.state = HostState.GAMEOVER;
+                                    this.transitionTo(HostState.GAMEOVER);
                                 }
                             }
                             else {
+                                console.assert(this.state === HostState.GAMERUNNING, "Invalid host state calling update on main game.");
                                 this.mainPivot.children[this.currentGame].update();
                             }
                             this.currentFrame++;
@@ -100,30 +104,73 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         {
                             var currentRotation = Math.min(this.targetArc, this.mainPivot.rotation + (this.arcPerGame / 80));
                             if (this.targetArc == currentRotation) {
-                                this.state = HostState.GAMERUNNING;
+                                this.transitionTo(HostState.COUNTDOWN);
                             }
                             this.mainPivot.rotation = currentRotation;
+                        }
+                        break;
+
+                    case HostState.COUNTDOWN:
+                        {
+                            var countdownTime = 3 - Math.floor((new Date() - this.startCountdownTimer) / 1000);
+                            if (countdownTime <= 0) {
+                                this.transitionTo(HostState.GAMERUNNING);
+                            }
+                            else {
+                                this.countdownTimer.timer.changeText(countdownTime + "...");
+                            }
                         }
                         break;
                 }
             }
         },
-
+        transitionTo: {
+            value: function transitionTo(newState) {
+                switch (newState) {
+                    case HostState.COUNTDOWN:
+                        {
+                            this.startCountdownTimer = new Date();
+                        }
+                        break;
+                    case HostState.GAMERUNNING:
+                        {
+                            this.mainPivot.children[this.currentGame].gameRootSprite.inputActivate(this.activationContext);
+                        }
+                        break;
+                    case HostState.GAMESWITCH:
+                        {
+                            this.targetArc = this.mainPivot.rotation + this.arcPerGame;
+                        }
+                        break;
+                }
+                this.state = newState;
+            }
+        },
         draw: {
             value: function draw(drawingContext) {
                 switch (this.state) {
                     case HostState.GAMERUNNING:
                     case HostState.GAMESWITCH:
+                    case HostState.COUNTDOWN:
                         {
                             drawingContext.pushTransform(this);
 
                             this.drawGameCore(drawingContext);
                             this.drawCore(drawingContext);
 
+                            if (this.state === HostState.COUNTDOWN) {
+                                this.drawCountdownTimer(drawingContext);
+                            }
+
                             drawingContext.popTransform();
                         }
                         break;
                 }
+            }
+        },
+        drawCountdownTimer: {
+            value: function drawCountdownTimer(drawingContext) {
+                this.countdownTimer.draw(drawingContext);
             }
         },
         drawGameCore: {

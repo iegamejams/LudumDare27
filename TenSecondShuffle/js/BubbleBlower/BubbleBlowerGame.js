@@ -82,7 +82,10 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
 
                 this.rootSprite.addNamedChild("bubble", bubbleSprite);
                 this.rootSprite.addChild(targetSprite);
-
+            }
+        },
+        inputActivate: {
+            value: function inputActivate(activationContext) {
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
             }
         },
