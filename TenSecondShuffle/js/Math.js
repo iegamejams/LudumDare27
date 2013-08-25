@@ -15,5 +15,12 @@ Object.defineProperties(Math, {
         value: function randomIntIndex(length) {
             return Math.floor(Math.random() * length);
         }
+    },
+    distance2d: {
+        value: function distance2d(x1, y1, x2, y2) {
+            var xDist = x2 - x1;
+            var yDist = y2 - y1;
+            return Math.sqrt(xDist * xDist + yDist * yDist);
+        }
     }
 });

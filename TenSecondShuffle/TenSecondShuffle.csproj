@@ -80,6 +80,7 @@
     <Content Include="js\Math.js" />
     <Content Include="js\OverlaySprite.js" />
     <Content Include="js\Sprite.js" />
+    <Content Include="js\TapTarget\TapTargetGame.js" />
     <Content Include="js\Templates\GameTemplate.js" />
     <Content Include="js\TextSprite.js" />
     <Content Include="sound\nyanlooped.mp3" />

@@ -35,9 +35,16 @@
 
     <!-- Bubbler Blower Game-->
     <script src="js/BubbleBlower/BubbleBlowerGame.js" type="text/ecmascript"></script>
+
+    <!-- Tap Target Game -->
+    <script src="js/TapTarget/TapTargetGame.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
+            {
+                id: "taptarg", title: "Tap Target", factory: TapTargetGame, instance: null, rootSprite: null,
+                help: "Click each target to reveal the next.", titleImage: "imgSquare"
+            },
             {
                 id: "clickseq", title: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null,
                 help: "Select the targets in increasing order.", titleImage: "imgSquare"
@@ -154,7 +161,7 @@
 </head>
 <body onload="init();">
     <h1>
-        <center>Welcome to Ludum Dare 27 and Ten Second Shuffle</center>
+        <center>Welcome to Ludum Dare 27 and "10s Twister"</center>
     </h1>
 
     <center>
