@@ -27,9 +27,15 @@ MemoryGame.prototype.constructor = MemoryGame;
                 this.previousSprite.flip();
                 if (this.previousSprite !== hitSprite) {
                     if (this.previousSprite.image === hitSprite.image) {
+                        this.score += this.level * 500;
+
                         this.rootSprite.removeChild(this.previousSprite);
                         this.rootSprite.removeChild(hitSprite);
                         hitSprite = null;
+
+                        if (this.rootSprite.children.length === 0) {
+                            this.earlyWin = true;
+                        }
                     }
                 }
             }

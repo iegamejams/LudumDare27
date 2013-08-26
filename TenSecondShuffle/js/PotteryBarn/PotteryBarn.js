@@ -18,7 +18,6 @@ PotteryBarn.prototype.constructor = PotteryBarn;
     Object.defineProperties(PotteryBarn.prototype, {
         update: {
             value: function update() {
-
             }
         },
 
@@ -43,13 +42,16 @@ PotteryBarn.prototype.constructor = PotteryBarn;
                 var claySprite = new ClaySprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY);
 
                 var step = 1;
-                if (this.level > 3)
+                if (this.level > 3) {
                     step = 2;
-                else if (this.level > 6)
+                }
+                else if (this.level > 6) {
                     step = 3;
+                }
 
-                for( var i = 0; i < 3; i += 1 / step)
+                for (var i = 0; i < 3; i += 1 / step) {
                     claySprite.addSymmetricalPoint(1, i);
+                }
 
                 claySprite.generateTargetShape();
 
@@ -64,6 +66,7 @@ PotteryBarn.prototype.constructor = PotteryBarn;
                 // Determine if the player won or lost
                 var canContinue = false;
                 if (this.rootSprite.claySprite.getAverageDistToTarget() < 5) {
+                    this.score += this.level * 2500;
                     canContinue = true;
                 }
 

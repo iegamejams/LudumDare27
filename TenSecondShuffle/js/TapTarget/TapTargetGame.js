@@ -45,6 +45,9 @@ TapTargetGame.prototype.constructor = TapTargetGame;
                 if (this.spritesLeft > 0) {
                     _createNewSprite(this);
                 }
+                else {
+                    this.earlyWin = true;
+                }
             }
         }
     }
