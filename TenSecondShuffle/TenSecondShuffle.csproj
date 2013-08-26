@@ -75,6 +75,8 @@
     <Content Include="js\ColorPair\ColorPairGame.js" />
     <Content Include="js\ColorPair\ColorPairSprite.js" />
     <Content Include="js\DashedCircleSprite.js" />
+    <Content Include="js\DriverRing\CarSprite.js" />
+    <Content Include="js\DriverRing\DriverRing.js" />
     <Content Include="js\FillSprite.js" />
     <Content Include="js\Game.js" />
     <Content Include="js\GameHostSprite.js" />
