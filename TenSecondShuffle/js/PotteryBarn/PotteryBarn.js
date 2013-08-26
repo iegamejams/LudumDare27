@@ -72,6 +72,7 @@ PotteryBarn.prototype.constructor = PotteryBarn;
         deactivate: {
             value: function deactivate(activationContext) {
                 activationContext.renderTargetElement.removeEventListener("click", this.boundClick);
+                activationContext.renderTargetElement.removeEventListener("touchstart", this.boundClick);
 
                 // Determine if the player won or lost
                 var canContinue = false;
