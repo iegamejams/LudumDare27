@@ -8,6 +8,9 @@ function GameHostSprite(activationContext, x, y) {
     this.addNamedChild("clockPivot", new Sprite(this.mainPivot.x, this.mainPivot.y));
     this.addNamedChild("countdownTimer", new OverlaySprite("rgba(0, 0, 0, 0.8)"));
 
+    // Create the holder for the Game Over sign
+    this.addNamedChild("gameOver", new OverlaySprite("rgba(0, 0, 0, 0.8)"));
+
     // Set up the countdown timer components
     this.countdownTimer.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 50, GlobalRuleSet.GameCenterY - 20, 100, 50, "beige"));
     this.countdownTimer.addNamedChild("timer", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, "", "bold 18pt Calibri"));
@@ -15,7 +18,21 @@ function GameHostSprite(activationContext, x, y) {
     // Set up the clock's image sprite.
     this.clockPivot.addNamedChild("clockArm", new ImageSprite(0, -GlobalRuleSet.GameHostHeight * 2.25, document.getElementById("imgClockHand")));
     this.clockPivot.ticks = -1;
-    // this.clockPivot.clockArm.scale = 1;
+
+    // Set up the Game Over sign
+    this.gameOver.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY - 20, 300, 50, "beige"));
+    this.gameOver.addChild(new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, "Game Over :-(", "bold 18pt Calibri"));
+
+    this.gameOver.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY + 40, 300, 50, "beige"));
+    this.gameOver.addChild(new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY + 60, "Click to Restart...", "italic bold 14pt Calibri"));
+
+    this.gameOver.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY + 80, 300, 50, "beige"));
+    this.gameOver.addNamedChild("level", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY + 100, "", "bold 14pt Calibri"));
+    this.gameOver.level.alignment = "left";
+
+    this.gameOver.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY + 120, 300, 50, "beige"));
+    this.gameOver.addNamedChild("score", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY + 140, "", "bold 14pt Calibri"));
+    this.gameOver.score.alignment = "left";
 
     this.activationContext = activationContext;
     this.reset();
@@ -155,6 +172,10 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                             }
                         }
                         break;
+                    case HostState.GAMEOVER:
+                        {
+                        }
+                        break;
                 }
             }
         },
@@ -187,6 +208,23 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                             this.mainPivot.children[nextGame].rotation = -(this.targetArc - GlobalRuleSet.ClockRotation * 10);
                         }
                         break;
+                    case HostState.GAMEOVER:
+                        {
+                            window.addEventListener("click", function () { window.location.reload(); });
+                            var games = this.mainPivot.children;
+                            var totalScore = 0;
+                            var highestLevel = 0;
+
+                            for (var i = 0; i < games.length; i++) {
+                                var gameObject = games[i].gameRootSprite.gameObject;
+                                totalScore += gameObject.score;
+                                highestLevel = Math.max(highestLevel, gameObject.level);
+                            }
+
+                            this.gameOver.level.changeText("Level: " + highestLevel);
+                            this.gameOver.score.changeText("Score: " + totalScore);
+                        }
+                        break;
                 }
                 this.state = newState;
             }
@@ -208,6 +246,11 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                             }
 
                             drawingContext.popTransform();
+                        }
+                        break;
+                    case HostState.GAMEOVER:
+                        {
+                            this.gameOver.draw(drawingContext);
                         }
                         break;
                 }

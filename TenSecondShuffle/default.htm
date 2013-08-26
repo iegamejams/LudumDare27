@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Time Twister - A Ludum Dare 27 Submission</title>
+    <title>T1me Twist0r - A Ludum Dare 27 Submission</title>
 
     <link rel="stylesheet" href="css/default.css" />
 
@@ -58,6 +58,10 @@
     <!-- Memory Game-->
     <script src="js/Memory/MemoryGame.js" type="text/ecmascript"></script>
     <script src="js/Memory/CardSprite.js" type="text/ecmascript"></script>
+
+    <!-- Draw Something -->
+    <script src="js/DrawSomething/DrawSomethingGame.js" type="text/ecmascript"></script>
+    <script src="js/DrawSomething/PathSprite.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
@@ -90,13 +94,15 @@
                 help: "Click or Tap pairs of the same color.", titleImage: "imgSquare"
             },
             {
-                id: "nyancat", title: "Nyan Cat!!!", factory: NyanCatGame, instance: null, rootSprite: null,
-                help: "Enjoy an intermission!", titleImage: "imgSquare", isSkipCountdown: true
+                id: "draw", title: "Draw Something", factory: DrawSomethingGame, instance: null, rootSprite: null,
+                help: "You know how to draw right?", titleImage: "imgSquare"
             },
+            /*
             {
                 id: "driverring", title: "Driver Ring!", factory: DriverRing, instance: null, rootSprite: null,
                 help: "Drive Through The Rings. Click to Accelerate!", titleImage: "imgSquare"
             }
+            */
         ];
 
         var drawingContext;
@@ -220,8 +226,6 @@
         }
 
         function update() {
-            // drawingContext.rootSprite.gameHostLayer.pivot.rotation = Math.sin(new Date() / 1000) * Math.PI / 24;
-
             // Pass updates through the visual sprite tree, a GameRootSprite will talk to the game itself.
             drawingContext.rootSprite.update();
         }
@@ -234,9 +238,9 @@
         }
     </script>
 </head>
-<body onload="init();">
+<body onload="init();" style="overflow: hidden">
     <h1>
-        <center>Time Twister</center>
+        <center>T1me Twist0r</center>
     </h1>
 
     <center>
@@ -274,6 +278,11 @@
         <img id="imgMemoryCat" src="images/memory/cat.png" />
         <img id="imgMemoryLion" src="images/memory/lion.png" />
         <img id="imgMemorySnake" src="images/memory/snake.png" />
+        <img id="imgMemorySwan" src="images/memory/swan.png" />
+        <img id="imgMemoryTurtle" src="images/memory/turtle.png" />
+        <img id="imgMemoryVulture" src="images/memory/vulture.png" />
+        <img id="imgMemoryWasp" src="images/memory/wasp.png" />
+        <img id="imgMemoryWolf" src="images/memory/wolf.png" />
     </div>
 
     <div id="audioHost" style="display:none">

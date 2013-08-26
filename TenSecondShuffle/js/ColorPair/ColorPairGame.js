@@ -40,6 +40,10 @@ ColorPairGame.prototype.constructor = ColorPairGame;
                     this.rootSprite.removeChild(hitSprite);
                     this.rootSprite.removeChild(this.previousSprite);
                     hitSprite = null;
+
+                    if (this.rootSprite.children.length === 0) {
+                        this.earlyWin;
+                    }
                 }
                 else {
                     fSuccessfulHit = false;
@@ -53,6 +57,10 @@ ColorPairGame.prototype.constructor = ColorPairGame;
     }
 
     Object.defineProperties(ColorPairGame.prototype, {
+        showWinOverlay: {
+            value: true
+        },
+
         update: {
             value: function update() {
             }
