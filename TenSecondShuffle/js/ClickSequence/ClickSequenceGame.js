@@ -19,6 +19,8 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
     ];
     var _maxLevels = _levelDifficulty.length;
     var _clickHandler = function click(evt) {
+        var fSuccessHit = false;
+
         var rootSprite = this.rootSprite;
         var childCount = rootSprite.children.length;
         if (childCount > 0) {
@@ -28,8 +30,14 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
             var dist = Math.sqrt(xDist * xDist + yDist * yDist);
 
             if (dist < childSprite.radius) {
+                fSuccessHit = true;
+                SoundManager.play("pop");
                 rootSprite.removeChild(childSprite);
             }
+        }
+
+        if (!fSuccessHit) {
+            SoundManager.play("burmp");
         }
     }
 

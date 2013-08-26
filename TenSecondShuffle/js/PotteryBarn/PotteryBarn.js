@@ -19,9 +19,10 @@ PotteryBarn.prototype.constructor = PotteryBarn;
     ];
     var _maxLevels = _levelDifficulty.length;
     var _clickHandler = function click(evt) {
-
-        if(isInView(evt.offsetX, evt.offsetY) )
+        if (isInView(evt.offsetX, evt.offsetY)) {
+            SoundManager.play("weeble");
             this.rootSprite.claySprite.updateTouch(evt.offsetX, evt.offsetY);
+        }
     }
 
     Object.defineProperties(PotteryBarn.prototype, {

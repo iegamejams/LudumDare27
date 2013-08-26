@@ -13,6 +13,7 @@ function GameHostSprite(activationContext, x, y) {
 
     // Set up the clock's image sprite.
     this.clockPivot.addNamedChild("clockArm", new ImageSprite(0, -GlobalRuleSet.GameHostHeight * 2.25, document.getElementById("imgClockHand")));
+    this.clockPivot.ticks = -1;
     // this.clockPivot.clockArm.scale = 1;
 
     this.activationContext = activationContext;
@@ -72,6 +73,13 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         {
                             if (this.state === HostState.GAMERUNNING) {
                                 if (this.currentFrame % GlobalRuleSet.GAME_SWITCH_FRAMES_PER_SECOND === 0) {
+                                    this.clockPivot.ticks++;
+                                    if (this.clockPivot.ticks % 2 == 0) {
+                                        SoundManager.play("tick");
+                                    }
+                                    else {
+                                        SoundManager.play("tock");
+                                    }
                                     this.clockPivot.rotation += GlobalRuleSet.ClockRotation;
                                 }
                             }
@@ -124,7 +132,14 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                             if (countdownTime <= 0) {
                                 this.transitionTo(HostState.GAMERUNNING);
                             }
-                            else {
+                            else if (this.countdownTime !== countdownTime) {
+                                if (countdownTime === 2) {
+                                    SoundManager.play("set");
+                                }
+                                if (countdownTime === 1) {
+                                    SoundManager.play("go");
+                                }
+                                this.countdownTime = countdownTime;
                                 this.countdownTimer.timer.changeText(countdownTime + "...");
                             }
                         }
@@ -142,6 +157,8 @@ GameHostSprite.prototype.constructor = GameHostSprite;
 
                             var nextGame = (this.currentGame + 1) % this.mainPivot.children.length;
                             this.mainPivot.children[nextGame].rotation = -(this.mainPivot.rotation - GlobalRuleSet.ClockRotation * 10);
+
+                            SoundManager.play("ready");
                         }
                         break;
                     case HostState.GAMERUNNING:
