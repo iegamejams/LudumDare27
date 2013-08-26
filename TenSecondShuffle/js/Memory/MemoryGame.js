@@ -47,6 +47,10 @@ MemoryGame.prototype.constructor = MemoryGame;
     }
 
     Object.defineProperties(MemoryGame.prototype, {
+        showWinOverlay: {
+            value: true
+        },
+
         update: {
             value: function update() {
                 // Animation update loop, this is the only callback per frame the game will get so it needs to set up the visual tree

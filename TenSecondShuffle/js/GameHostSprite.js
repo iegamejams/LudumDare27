@@ -26,6 +26,14 @@ function GameHostSprite(activationContext, x, y) {
     this.gameOver.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY + 40, 300, 50, "beige"));
     this.gameOver.addChild(new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY + 60, "Click to Restart...", "italic bold 14pt Calibri"));
 
+    this.gameOver.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY + 80, 300, 50, "beige"));
+    this.gameOver.addNamedChild("level", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY + 100, "", "bold 14pt Calibri"));
+    this.gameOver.level.alignment = "left";
+
+    this.gameOver.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY + 120, 300, 50, "beige"));
+    this.gameOver.addNamedChild("score", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY + 140, "", "bold 14pt Calibri"));
+    this.gameOver.score.alignment = "left";
+
     this.activationContext = activationContext;
     this.reset();
 }
@@ -203,6 +211,18 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                     case HostState.GAMEOVER:
                         {
                             window.addEventListener("click", function () { window.location.reload(); });
+                            var games = this.mainPivot.children;
+                            var totalScore = 0;
+                            var highestLevel = 0;
+
+                            for (var i = 0; i < games.length; i++) {
+                                var gameObject = games[i].gameRootSprite.gameObject;
+                                totalScore += gameObject.score;
+                                highestLevel = Math.max(highestLevel, gameObject.level);
+                            }
+
+                            this.gameOver.level.changeText("Level: " + highestLevel);
+                            this.gameOver.score.changeText("Score: " + totalScore);
                         }
                         break;
                 }

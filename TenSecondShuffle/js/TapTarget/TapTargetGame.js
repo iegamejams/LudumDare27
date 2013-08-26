@@ -53,6 +53,10 @@ TapTargetGame.prototype.constructor = TapTargetGame;
     }
 
     Object.defineProperties(TapTargetGame.prototype, {
+        showWinOverlay: {
+            value: true
+        },
+
         update: {
             value: function update() {
             }
