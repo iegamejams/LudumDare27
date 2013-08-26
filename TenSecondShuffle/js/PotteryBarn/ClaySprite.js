@@ -108,9 +108,6 @@ Object.defineProperties(ClaySprite.prototype, {
     },
     updateTouch: {
         value: function updateTouch(x, y) {
-
-            console.log(this.getAverageDistToTarget());
-
             var distToCenterX = 0, distToCenterY = 0, distToCenter = 0,
                 distToPointX = 0, distToPointY = 0, distToPoint = 0,
                 posX = 0, posY = 0;
