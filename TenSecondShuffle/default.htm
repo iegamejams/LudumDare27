@@ -139,7 +139,6 @@
 
             // Run our intro
             intro();
-
         }
 
         // Try to play the intro if it fails don't block, let it keep going.
@@ -237,11 +236,18 @@
     </script>
 </head>
 <body onload="init();" style="overflow: hidden">
-    <h1>
-        <center>T1me Twist0r</center>
-    </h1>
-
     <center>
+        <div id="titleBar">
+            <table width="1024">
+                <tr>
+                    <td align="left" width="150" style="font-size: 8pt;"><a target="_blank" href="https://github.com/iegamejams/LudumDare27">Source Code</a></td>
+                    <td align="center"><span style="font-weight: bold; font-size: 24pt;">T1me Twist0r</span></td>
+                    <td align="right" width="150" style="font-size: 8pt;"><a target="_blank" href="http://www.ludumdare.com/compo/ludum-dare-27/?action=preview&uid=14372">Ludum Dare 27 Voting</a></td>
+                </tr>
+            </table>
+        </div>
+        <br />
+
         <canvas id="renderTarget" width="1024" height="768"></canvas>
         <div id="titles" style="display: none">
             <div id="titlecontent">
