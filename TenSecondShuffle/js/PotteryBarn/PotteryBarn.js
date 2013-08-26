@@ -72,8 +72,6 @@ PotteryBarn.prototype.constructor = PotteryBarn;
             value: function deactivate(activationContext) {
                 activationContext.renderTargetElement.removeEventListener("click", this.boundClick);
 
-                console.log(this.rootSprite.claySprite.getAverageDistToTarget());
-
                 // Determine if the player won or lost
                 var canContinue = false;
                 if (this.rootSprite.claySprite.getAverageDistToTarget() < 5) {
