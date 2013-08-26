@@ -141,6 +141,8 @@
         // Try to play the intro if it fails don't block, let it keep going.
         function intro() {
             var introSound = document.getElementById("intro");
+            var titles = document.getElementById("titles");
+            titles.style.display = "block";
 
             introSound.addEventListener("ended", startGame);
             introSound.addEventListener("error", startGame);
@@ -155,6 +157,8 @@
 
         function startGame() {
             var introSound = document.getElementById("intro");
+            var titles = document.getElementById("titles");
+            titles.style.display = "none";
 
             introSound.currentTime = 0;
             introSound.pause();
@@ -237,6 +241,27 @@
 
     <center>
         <canvas id="renderTarget" width="1024" height="768"></canvas>
+        <div id="titles" style="display: none">
+            <div id="titlecontent">
+                <p>Are they really going to talk over epic music and animate stuff like Star Wars?</p>
+
+                <p>Yep, I guess so. Holy crap, this is going to be Legen...</p>
+                
+                <p>Wait for it!!!</p>
+
+                <p>... Wait for it!!!</p>
+
+                <p>Well, this was written by two guys, Justin Rogers (DigiTec) and Nassim Amar.</p>
+
+                <p>Is he still talking? {add more filler}</p>
+
+                <p>...DARY, Legen, frigin, DARY!</p>
+
+                <p>We hope you enjoy the game!!!</p>
+
+                <p>BTW, Next time click to skip...</p>
+            </div>
+        </div>
     </center>
 
     <div style="display: none">
