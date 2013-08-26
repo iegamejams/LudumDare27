@@ -69,3 +69,12 @@ Object.defineProperties(Game.prototype, {
         }
     }
 });
+
+// To Export
+function isInView(x, y, border) {
+    if (typeof border === 'undefined') border = 0;
+    return (x > GlobalRuleSet.GameMinX + border &&
+            x < GlobalRuleSet.GameMinX + GlobalRuleSet.GameWidth - border &&
+            y > GlobalRuleSet.GameMinY +border &&
+            y < GlobalRuleSet.GameMinY + GlobalRuleSet.GameHeight - border);
+}

@@ -18,15 +18,23 @@ PotteryBarn.prototype.constructor = PotteryBarn;
             y = evt.changedTouches[1];
         }
 
-        if (isInView(evt.offsetX, evt.offsetY)) {
+        if (isInView(x, y) && this.isShapeMatched == false) {
             SoundManager.play("weeble");
             this.rootSprite.claySprite.updateTouch(x, y);
         }
     }
 
     Object.defineProperties(PotteryBarn.prototype, {
+        showWinOverlay: {
+            value: true
+        },
         update: {
             value: function update() {
+                // Shape grading.
+                if (this.rootSprite.claySprite.getAverageDistToTarget() < 4) {
+                    this.isShapeMatched = true;
+                    this.earlyWin = true;
+                }
             }
         },
 
@@ -37,6 +45,8 @@ PotteryBarn.prototype.constructor = PotteryBarn;
                 this.level = 0;
 
                 this.boundClick = _clickHandler.bind(this);
+
+                this.isShapeMatched = false;
             }
         },
         inputActivate: {
@@ -67,6 +77,8 @@ PotteryBarn.prototype.constructor = PotteryBarn;
 
                 claySprite.lineWidth = 3;
                 this.rootSprite.addNamedChild("claySprite", claySprite);
+
+                this.isShapeMatched = false;
             }
         },
         deactivate: {
@@ -76,7 +88,7 @@ PotteryBarn.prototype.constructor = PotteryBarn;
 
                 // Determine if the player won or lost
                 var canContinue = false;
-                if (this.rootSprite.claySprite.getAverageDistToTarget() < 5) {
+                if (this.isShapeMatched) {
                     this.score += this.level * 2500;
                     canContinue = true;
                 }
@@ -92,12 +104,3 @@ PotteryBarn.prototype.constructor = PotteryBarn;
         }
     });
 })();
-
-
-// To Export
-function isInView( x, y) {
-    return (x > GlobalRuleSet.GameMinX &&
-            x < GlobalRuleSet.GameMinX + GlobalRuleSet.GameWidth &&
-            y > GlobalRuleSet.GameMinY &&
-            y < GlobalRuleSet.GameMinY + GlobalRuleSet.GameHeight);
-}
