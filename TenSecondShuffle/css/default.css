@@ -62,11 +62,11 @@
 {
 	position: absolute;
 	top: 100%;
-	-webkit-animation: scroll 20s linear 0s infinite;
-	-moz-animation: scroll 20s linear 0s infinite;
-	-ms-animation: scroll 20s linear 0s infinite;
-	-o-animation: scroll 20s linear 0s infinite;
-	animation: scroll 20s linear 0s infinite;
+	-webkit-animation: scroll 20s linear 0s 1;
+	-moz-animation: scroll 20s linear 0s 1;
+	-ms-animation: scroll 20s linear 0s 1;
+	-o-animation: scroll 20s linear 0s 1;
+	animation: scroll 20s linear 0s 1;
 }
 
 /* animation */
