@@ -54,9 +54,17 @@
     
     <!-- Nyan Cat -->
     <script src="js/NyanCat/NyanCatGame.js" type="text/ecmascript"></script>
+
+    <!-- Memory Game-->
+    <script src="js/Memory/MemoryGame.js" type="text/ecmascript"></script>
+    <script src="js/Memory/CardSprite.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
+            {
+                id: "memory", title: "Memory", factory: MemoryGame, instance: null, rootSprite: null,
+                help: "Quickly find the matching pairs!", titleImage: "imgSquare"
+            },
             {
                 id: "taptarg", title: "Tap Target", factory: TapTargetGame, instance: null, rootSprite: null,
                 help: "Click each target to reveal the next.", titleImage: "imgSquare"
@@ -207,6 +215,10 @@
         <img id="imgNyanSprite" src="images/nyan-cat.png" />
         <img id="imgNyanStarSprite" src="images/nyan-star.png" />
         <img id="imgNyanRainbowSprite" src="images/nyan-rainbow.png" />
+
+        <img id="imgMemoryCat" src="images/memory/cat.png" />
+        <img id="imgMemoryLion" src="images/memory/lion.png" />
+        <img id="imgMemorySnake" src="images/memory/snake.png" />
     </div>
 
     <div id="audioHost" style="display:none">

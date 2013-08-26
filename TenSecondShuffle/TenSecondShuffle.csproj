@@ -62,6 +62,14 @@
     <Content Include="images\background_layer\clock_hand.png" />
     <Content Include="images\background_layer\time_background.jpg" />
     <Content Include="images\background_layer\time_background2.jpg" />
+    <Content Include="images\memory\cat.png" />
+    <Content Include="images\memory\lion.png" />
+    <Content Include="images\memory\snake.png" />
+    <Content Include="images\memory\swan.png" />
+    <Content Include="images\memory\turtle.png" />
+    <Content Include="images\memory\vulture.png" />
+    <Content Include="images\memory\wasp.png" />
+    <Content Include="images\memory\wolf.png" />
     <Content Include="images\nyan-cat.png" />
     <Content Include="images\nyan-rainbow.png" />
     <Content Include="images\nyan-star.png" />
@@ -86,6 +94,7 @@
     <Content Include="js\GlobalRuleSet.js" />
     <Content Include="js\ImageSprite.js" />
     <Content Include="js\Math.js" />
+    <Content Include="js\Memory\CardSprite.js" />
     <Content Include="js\Memory\MemoryGame.js" />
     <Content Include="js\NyanCat\NyanCatGame.js" />
     <Content Include="js\OverlaySprite.js" />

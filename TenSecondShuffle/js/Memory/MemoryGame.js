@@ -8,6 +8,14 @@ MemoryGame.prototype = Object.create(Game.prototype);
 MemoryGame.prototype.constructor = MemoryGame;
 
 (function initialization_MemoryGame() {
+    var _cards = [
+        "imgMemoryCat", "imgMemoryLion", "imgMemorySnake", "imgMemorySwan",
+        "imgMemoryTurtle", "imgMemoryVulture", "imgMemoryWasp", "imgMemoryWolf"
+    ];
+    var _levelDifficulty = [
+        3, 4, 5, 6, 7, 8
+    ];
+    var _maxLevels = _levelDifficulty.length;
 
     var _clickHandler = function click(evt) {
         var game = this;
@@ -15,14 +23,20 @@ MemoryGame.prototype.constructor = MemoryGame;
 
         var hitSprite = rootSprite.hitTestSquare(evt.offsetX, evt.offsetY, 32);
         if (hitSprite) {
-            if (this.previousSprite && this.previousSprite !== hitSprite) {
-                if (this.previousSprite.image === hitSprite.image) {
-                    this.rootSprite.removeChild(this.previousSprite);
-                    this.rootSprite.removeChild(hitSprite);
-                    hitSprite = null;
+            if (this.previousSprite) {
+                this.previousSprite.flip();
+                if (this.previousSprite !== hitSprite) {
+                    if (this.previousSprite.image === hitSprite.image) {
+                        this.rootSprite.removeChild(this.previousSprite);
+                        this.rootSprite.removeChild(hitSprite);
+                        hitSprite = null;
+                    }
                 }
             }
             this.previousSprite = hitSprite;
+            if (this.previousSprite) {
+                this.previousSprite.flip();
+            }
         }
     }
 
@@ -50,6 +64,44 @@ MemoryGame.prototype.constructor = MemoryGame;
                 Game.prototype.activate.call(this, activationContext);
 
                 this.level++;
+                var normalizedLevelDifficulty = Math.min(this.level - 1, _maxLevels - 1);
+                var levelDescriptor = _levelDifficulty[normalizedLevelDifficulty];
+
+                var unshuffledCards = [];
+                for (var i = 0; i < levelDescriptor; i++) {
+                    var card1 = new CardSprite(0, 0, document.getElementById(_cards[i]));
+                    var card2 = new CardSprite(0, 0, document.getElementById(_cards[i]));
+
+                    unshuffledCards.push(card1);
+                    unshuffledCards.push(card2);
+
+                    this.rootSprite.addChild(card1);
+                    this.rootSprite.addChild(card2);
+                }
+
+                this.cards = [];
+                while (unshuffledCards.length > 0) {
+                    this.cards.push(unshuffledCards.splice(Math.randomIntIndex(unshuffledCards.length), 1)[0]);
+                }
+                var rows = Math.ceil(this.cards.length / 4);
+                var currentRow = -Math.ceil(rows / 2);
+
+                for (var i = 0; i < rows; i++) {
+                    var rowOffset = i * 4;
+                    var xOffset = -2;
+                    if (i == (rows - 1) && this.cards.length % 4 !== 0) {
+                        xOffset = -1;
+                    }
+                    for (var j = 0; j < 4; j++) {
+                        var card = this.cards[rowOffset + j];
+                        if (card) {
+                            card.x = GlobalRuleSet.GameCenterX + 50 + (xOffset + j) * 100;
+                            card.y = GlobalRuleSet.GameCenterY + 50 + currentRow * 100;
+                        }
+                    }
+                    currentRow++;
+                }
+
             }
         },
         inputActivate: {
