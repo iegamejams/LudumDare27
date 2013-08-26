@@ -50,6 +50,9 @@ Object.defineProperties(this, {
                 },
                 Debug: {
                     value: true
+                },
+                isTouchDevice:{ 
+                    value: 'ontouchstart' in document.documentElement
                 }
             });
             Object.defineProperties(_globalRuleSet, {

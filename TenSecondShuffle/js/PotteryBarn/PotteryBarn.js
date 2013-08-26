@@ -9,9 +9,18 @@ PotteryBarn.prototype.constructor = PotteryBarn;
 
 (function initialization_PotteryBarn() {
     var _clickHandler = function click(evt) {
+        evt.preventDefault();
+
+        var x = evt.offsetX, y = evt.offsetY;
+
+        if (!(typeof evt.changedTouches === 'undefined')) {
+            x = evt.changedTouches[0];
+            y = evt.changedTouches[1];
+        }
+
         if (isInView(evt.offsetX, evt.offsetY)) {
             SoundManager.play("weeble");
-            this.rootSprite.claySprite.updateTouch(evt.offsetX, evt.offsetY);
+            this.rootSprite.claySprite.updateTouch(x, y);
         }
     }
 
@@ -33,6 +42,7 @@ PotteryBarn.prototype.constructor = PotteryBarn;
         inputActivate: {
             value: function inputActivate(activationContext) {
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
+                activationContext.renderTargetElement.addEventListener("touchstart", this.boundClick);
                 SoundManager.play("wobble");
             }
         },

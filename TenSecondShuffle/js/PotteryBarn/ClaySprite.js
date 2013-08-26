@@ -18,7 +18,7 @@ function ClaySprite(x, y) {
     this.scl = 80;
 
     this.interp = .1;
-    this.influenceDistance = this.scl * .4;
+    this.influenceDistance = this.scl * .6;
 
     this.minX = 0, this.maxX = 0,
     this.minY = 0, this.maxY = 0;
@@ -45,7 +45,7 @@ Object.defineProperties(ClaySprite.prototype, {
             this.drawSprite(this.points, this.fill);
 
             // Draw Target Shape.
-            this.drawSprite(this.targetPoints, null, "red");
+            this.drawSprite(this.targetPoints, null, (this.getAverageDistToTarget() < 5? "green" : "red"));
         }
     },
     drawSprite: {
@@ -125,22 +125,21 @@ Object.defineProperties(ClaySprite.prototype, {
                 distToPoint = Math.sqrt(distToPointX * distToPointX + distToPointY * distToPointY);
 
                 if(distToPointY < this.influenceDistance &&
-                   distToPointX < this.influenceDistance )
+                   (distToPointX < this.influenceDistance || 
+                    this.isInSprite(x,y) ))
                     if (distToCenterX < posX)
-                        this.points[i].targetX += (distToPoint * .3);
+                        this.points[i].targetX += (distToPoint * .2);
                     else if (distToCenterX < posX * 1.4)
-                        this.points[i].targetX -= (distToPoint * .3);
+                        this.points[i].targetX -= (distToPoint * .4);
             }
         }
     },
     generateTargetShape: {
         value: function generateTargetShape() {
-            // Todo: Go through all the points and create the mold.
-
             for (var i = 0; i < this.points.length; ++i) {
                 this.targetPoints.push({
                     x: Math.random() * this.points[i].x + this.points[i].x * .5,
-                    y: this.points[i].y + Math.random() * 5
+                    y: this.points[i].y
                 });
             }
         }
@@ -156,6 +155,15 @@ Object.defineProperties(ClaySprite.prototype, {
                 distSum += dist;
             }
             return (distSum / this.points.length);
+        }
+    },
+    isInSprite: {
+        value: function isInSprite(x, y) {
+            var mx = GlobalRuleSet.GameCenterX - x,
+                my = GlobalRuleSet.GameCenterY - y;
+
+            return (mx > -this.maxX && mx < this.maxX &&
+                    my > -this.maxY && my < this.maxY);
         }
     }
 });
