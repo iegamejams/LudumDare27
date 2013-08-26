@@ -28,17 +28,26 @@ ColorPairGame.prototype.constructor = ColorPairGame;
         return new ColorPairSprite(GlobalRuleSet.GameCenterX - 250 + gridX * 100, GlobalRuleSet.GameCenterY - 250 + gridY * 100, _colors[currentColor]);
     }
     function _clickHandler(evt) {
+        var fSuccessfulHit = true;
         var hitSprite = this.rootSprite.hitTestSquare(evt.offsetX, evt.offsetY, 32);
         if (hitSprite) {
             if (this.previousSprite && this.previousSprite !== hitSprite) {
                 if (hitSprite.color === this.previousSprite.color) {
                     this.score += 500 * this.level;
 
+                    SoundManager.play("pop");
+
                     this.rootSprite.removeChild(hitSprite);
                     this.rootSprite.removeChild(this.previousSprite);
                     hitSprite = null;
                 }
+                else {
+                    fSuccessfulHit = false;
+                }
             }
+        }
+        if (!fSuccessfulHit) {
+            SoundManager.play("burmp");
         }
         this.previousSprite = hitSprite;
     }
