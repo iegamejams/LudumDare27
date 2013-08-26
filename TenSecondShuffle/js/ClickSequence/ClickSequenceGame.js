@@ -30,9 +30,14 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
             var dist = Math.sqrt(xDist * xDist + yDist * yDist);
 
             if (dist < childSprite.radius) {
+                this.score += this.level * 500;
                 fSuccessHit = true;
                 SoundManager.play("pop");
                 rootSprite.removeChild(childSprite);
+
+                if (this.rootSprite.children.length === 0) {
+                    this.earlyWin = true;
+                }
             }
         }
 
@@ -42,6 +47,10 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
     }
 
     Object.defineProperties(ClickSequenceGame.prototype, {
+        showWinOverlay: {
+            value: true
+        },
+
         update: {
             value: function update() {
             }
@@ -57,6 +66,8 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
 
         activate: {
             value: function activate(activationContext) {
+                Game.prototype.activate.call(this, activationContext);
+
                 this.level++;
                 var normalizedLevelDifficulty = Math.min(this.level - 1, _maxLevels - 1);
                 this.levelDescriptor = _levelDifficulty[normalizedLevelDifficulty];
@@ -76,11 +87,15 @@ ClickSequenceGame.prototype.constructor = ClickSequenceGame;
         },
         inputActivate: {
             value: function inputActivate(activationContext) {
+                Game.prototype.inputActivate.call(this, activationContext);
+
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
             }
         },
         deactivate: {
             value: function deactivate(activationContext) {
+                Game.prototype.deactivate.call(this, activationContext);
+
                 activationContext.renderTargetElement.removeEventListener("click", this.boundClick);
 
                 // Determine if the player won or lost

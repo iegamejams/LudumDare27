@@ -41,6 +41,9 @@ Object.defineProperties(this, {
                 HelpTitleFont: {
                     value: "italic bold 14pt Calibri"
                 },
+                UIFont: {
+                    value: "bold 14pt Calibri"
+                },
 
                 RandomizeGameOrder: {
                     value: false

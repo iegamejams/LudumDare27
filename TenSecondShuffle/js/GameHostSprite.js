@@ -6,9 +6,10 @@ function GameHostSprite(activationContext, x, y) {
     // Set up the game host's main UI components
     this.addNamedChild("mainPivot", new Sprite(GlobalRuleSet.GameHostWidth / 2, GlobalRuleSet.GameHostHeight * 3));
     this.addNamedChild("clockPivot", new Sprite(this.mainPivot.x, this.mainPivot.y));
-    this.addNamedChild("countdownTimer", new OverlaySprite("rgba(0, 0, 0, 0.2)"));
+    this.addNamedChild("countdownTimer", new OverlaySprite("rgba(0, 0, 0, 0.8)"));
 
     // Set up the countdown timer components
+    this.countdownTimer.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 50, GlobalRuleSet.GameCenterY - 20, 100, 50, "beige"));
     this.countdownTimer.addNamedChild("timer", new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, "", "bold 18pt Calibri"));
 
     // Set up the clock's image sprite.
