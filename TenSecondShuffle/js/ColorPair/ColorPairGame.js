@@ -32,6 +32,8 @@ ColorPairGame.prototype.constructor = ColorPairGame;
         if (hitSprite) {
             if (this.previousSprite && this.previousSprite !== hitSprite) {
                 if (hitSprite.color === this.previousSprite.color) {
+                    this.score += 500 * this.level;
+
                     this.rootSprite.removeChild(hitSprite);
                     this.rootSprite.removeChild(this.previousSprite);
                     hitSprite = null;

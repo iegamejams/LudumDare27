@@ -35,6 +35,8 @@ TapTargetGame.prototype.constructor = TapTargetGame;
             var targetSprite = this.targetSprite;
 
             if (Math.distance2d(targetSprite.x, targetSprite.y, evt.offsetX, evt.offsetY) <= targetSprite.radius) {
+                this.score += 500 * this.level;
+
                 SoundManager.play("pop");
                 this.rootSprite.removeChild(this.targetSprite);
                 this.targetSprite = null;

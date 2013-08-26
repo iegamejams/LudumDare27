@@ -46,8 +46,10 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
                     if (this.radius < this.levelDescriptor.radius) {
                         bubbleSprite.fill = "pink";
                         bubbleSprite.stroke = "deeppink";
+                        this.score += 2 * this.level;
                     }
                     else if (this.radius < this.levelDescriptor.pop) {
+                        this.score += 5 * this.level;
                         bubbleSprite.fill = "lightgreen";
                         bubbleSprite.stroke = "darkgreen";
                     }

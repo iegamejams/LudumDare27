@@ -84,6 +84,7 @@
     <Content Include="js\GlobalRuleSet.js" />
     <Content Include="js\ImageSprite.js" />
     <Content Include="js\Math.js" />
+    <Content Include="js\Memory\MemoryGame.js" />
     <Content Include="js\NyanCat\NyanCatGame.js" />
     <Content Include="js\OverlaySprite.js" />
     <Content Include="js\SoundManager.js" />

@@ -4,6 +4,7 @@ function TextSprite(x, y, text, font) {
     Sprite.call(this, x, y);
 
     this.text = text;
+    this.alignment = "center";
     this.font = font || "12pt Calibri";
 }
 
@@ -35,7 +36,16 @@ Object.defineProperties(TextSprite.prototype, {
                     this._measureFont = true;
                 }
                 if (!this._measureText) {
-                    this._textOffsetX = -ctx.measureText(this.text).width / 2;
+                    this._textOffsetX = 0;
+                    if (this.alignment === "center" || this.alignment === "right") {
+                        var measurement = ctx.measureText(this.text).width;
+                        if (this.alignment === "center") {
+                            this._textOffsetX = -(measurement / 2);
+                        }
+                        else {
+                            this._textOffsetX = -measurement;
+                        }
+                    }
                     this._measureText = true;
                 }
 

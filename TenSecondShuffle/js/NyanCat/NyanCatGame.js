@@ -36,6 +36,13 @@ NyanCatGame.prototype.constructor = NyanCatGame;
     }
 
     Object.defineProperties(NyanCatGame.prototype, {
+        showLevel: {
+            value: false
+        },
+        showScore: {
+            value: false
+        },
+
         update: {
             value: function update() {
                 for (var i = 0; i < this.starSprites.length; i++) {

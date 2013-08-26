@@ -4,12 +4,25 @@ function Game(gameRootSprite) {
     this.rootSprite = gameRootSprite;
     this.activated = false;
     this.inputActivated = false;
+    this.level = 0;
+    this.score = 0;
+    this.earlyWin = false;
 }
 
 Game.prototype = Object.create(null);
 Game.prototype.constructor = Game;
 
 Object.defineProperties(Game.prototype, {
+    showLevel: {
+        value: true
+    },
+    showScore: {
+        value: true
+    },
+    showWinOverlay: {
+        value: false
+    },
+
     update: {
         value: function update() {
         }
@@ -26,6 +39,7 @@ Object.defineProperties(Game.prototype, {
     activate: {
         value: function activate() {
             this.activated = true;
+            this.earlyWin = false;
             // Long running games will likely have additional state controlling where they are in the game.
             // Short running games will want to initialize their next level here.
         }
@@ -38,6 +52,7 @@ Object.defineProperties(Game.prototype, {
     },
     deactivate: {
         value: function deactivate() {
+            this.earlyWin = false;
             this.activated = false;
             this.inputActivated = false;
 
