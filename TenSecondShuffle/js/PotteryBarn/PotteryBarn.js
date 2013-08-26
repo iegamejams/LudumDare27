@@ -40,14 +40,17 @@ PotteryBarn.prototype.constructor = PotteryBarn;
                 this.boundClick = _clickHandler.bind(this);
             }
         },
-
+        inputActivate: {
+            value: function inputActivate(activationContext) {
+                activationContext.renderTargetElement.addEventListener("click", this.boundClick);
+            }
+        },
         activate: {
             value: function activate(activationContext) {
                 this.level++;
                 var normalizedLevelDifficulty = Math.min(this.level - 1, _maxLevels - 1);
                 this.levelDescriptor = _levelDifficulty[normalizedLevelDifficulty];
 
-                this.area = 0;
                 var claySprite = new ClaySprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY);
 
                 claySprite.addSymmetricalPoint(1, 0);
@@ -58,10 +61,6 @@ PotteryBarn.prototype.constructor = PotteryBarn;
 
                 claySprite.lineWidth = 3;
                 this.rootSprite.addNamedChild("claySprite", claySprite);
-
-
-
-                activationContext.renderTargetElement.addEventListener("click", this.boundClick);
             }
         },
         deactivate: {
