@@ -62,7 +62,11 @@
     <Content Include="images\background_layer\clock_hand.png" />
     <Content Include="images\background_layer\time_background.jpg" />
     <Content Include="images\background_layer\time_background2.jpg" />
+    <Content Include="images\nyan-cat.png" />
+    <Content Include="images\nyan-rainbow.png" />
+    <Content Include="images\nyan-star.png" />
     <Content Include="images\stock\square.png" />
+    <Content Include="js\AnimatedFrameSprite.js" />
     <Content Include="js\BrowserPolyFills.js" />
     <Content Include="js\BubbleBlower\BubbleBlowerGame.js" />
     <Content Include="js\CircleSprite.js" />
@@ -71,6 +75,7 @@
     <Content Include="js\ColorPair\ColorPairGame.js" />
     <Content Include="js\ColorPair\ColorPairSprite.js" />
     <Content Include="js\DashedCircleSprite.js" />
+    <Content Include="js\FillSprite.js" />
     <Content Include="js\Game.js" />
     <Content Include="js\GameHostSprite.js" />
     <Content Include="js\GameRootSprite.js" />
@@ -79,7 +84,9 @@
     <Content Include="js\GlobalRuleSet.js" />
     <Content Include="js\ImageSprite.js" />
     <Content Include="js\Math.js" />
+    <Content Include="js\NyanCat\NyanCatGame.js" />
     <Content Include="js\OverlaySprite.js" />
+    <Content Include="js\SoundManager.js" />
     <Content Include="js\PotteryBarn\ClaySprite.js" />
     <Content Include="js\PotteryBarn\PotteryBarn.js" />
     <Content Include="js\Sprite.js" />

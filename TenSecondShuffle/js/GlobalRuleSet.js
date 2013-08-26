@@ -43,7 +43,7 @@ Object.defineProperties(this, {
                 },
 
                 RandomizeGameOrder: {
-                    value: true
+                    value: false
                 },
                 Debug: {
                     value: true
