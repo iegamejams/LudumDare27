@@ -44,6 +44,7 @@ PotteryBarn.prototype.constructor = PotteryBarn;
         inputActivate: {
             value: function inputActivate(activationContext) {
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
+                SoundManager.play("wobble");
             }
         },
         activate: {

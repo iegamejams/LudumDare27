@@ -55,6 +55,7 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
                         bubbleSprite.fill = "red";
                         bubbleSprite.stroke = "darkred";
                         this.popped = true;
+                        SoundManager.stopAll();
                         SoundManager.play("pop");
                     }
                 }
