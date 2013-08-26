@@ -8,16 +8,6 @@ PotteryBarn.prototype = Object.create(Game.prototype);
 PotteryBarn.prototype.constructor = PotteryBarn;
 
 (function initialization_PotteryBarn() {
-    var _pumpArea = 400;
-    var _levelDifficulty = [
-        { radius: 30, pop: 40, airLoss: _pumpArea / 48 },
-        { radius: 35, pop: 42, airLoss: _pumpArea / 45 },
-        { radius: 40, pop: 46, airLoss: _pumpArea / 42 },
-        { radius: 50, pop: 55, airLoss: _pumpArea / 39 },
-        { radius: 60, pop: 64, airLoss: _pumpArea / 36 },
-        { radius: 75, pop: 78, airLoss: _pumpArea / 30 },
-    ];
-    var _maxLevels = _levelDifficulty.length;
     var _clickHandler = function click(evt) {
         if (isInView(evt.offsetX, evt.offsetY)) {
             SoundManager.play("weeble");
@@ -50,9 +40,6 @@ PotteryBarn.prototype.constructor = PotteryBarn;
         activate: {
             value: function activate(activationContext) {
                 this.level++;
-                var normalizedLevelDifficulty = Math.min(this.level - 1, _maxLevels - 1);
-                this.levelDescriptor = _levelDifficulty[normalizedLevelDifficulty];
-
                 var claySprite = new ClaySprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY);
 
                 var step = 1;

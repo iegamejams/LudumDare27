@@ -44,16 +44,27 @@
     <!-- Tap Target Game -->
     <script src="js/TapTarget/TapTargetGame.js" type="text/ecmascript"></script>
     
-    <!-- Shape Molding Game -->
+    <!-- Clay Molding Game -->
     <script src="js/PotteryBarn/ClaySprite.js" type="text/ecmascript"></script>
     <script src="js/PotteryBarn/PotteryBarn.js" type="text/ecmascript"></script>
 
+    <!-- Car Clicking Game -->
+    <script src="js/DriverRing/CarSprite.js" type="text/ecmascript"></script>
+    <script src="js/DriverRing/DriverRing.js" type="text/ecmascript"></script>
     
     <!-- Nyan Cat -->
     <script src="js/NyanCat/NyanCatGame.js" type="text/ecmascript"></script>
+
+    <!-- Memory Game-->
+    <script src="js/Memory/MemoryGame.js" type="text/ecmascript"></script>
+    <script src="js/Memory/CardSprite.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
+            {
+                id: "memory", title: "Memory", factory: MemoryGame, instance: null, rootSprite: null,
+                help: "Quickly find the matching pairs!", titleImage: "imgSquare"
+            },
             {
                 id: "taptarg", title: "Tap Target", factory: TapTargetGame, instance: null, rootSprite: null,
                 help: "Click each target to reveal the next.", titleImage: "imgSquare"
@@ -64,7 +75,7 @@
             },
             {
                 id: "nyancat", title: "Nyan Cat!!!", factory: NyanCatGame, instance: null, rootSprite: null,
-                help: "Enjoy an intermission!", titleImage: "imgSquare"
+                help: "Enjoy an intermission!", titleImage: "imgSquare", isSkipCountdown: true
             },
             {
                 id: "clickseq", title: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null,
@@ -80,8 +91,12 @@
             },
             {
                 id: "nyancat", title: "Nyan Cat!!!", factory: NyanCatGame, instance: null, rootSprite: null,
-                help: "Enjoy an intermission!", titleImage: "imgSquare"
+                help: "Enjoy an intermission!", titleImage: "imgSquare", isSkipCountdown: true
             },
+            {
+                id: "driverring", title: "Driver Ring!", factory: DriverRing, instance: null, rootSprite: null,
+                help: "Drive Through The Rings!", titleImage: "imgSquare"
+            }
         ];
 
         var drawingContext;
@@ -200,6 +215,10 @@
         <img id="imgNyanSprite" src="images/nyan-cat.png" />
         <img id="imgNyanStarSprite" src="images/nyan-star.png" />
         <img id="imgNyanRainbowSprite" src="images/nyan-rainbow.png" />
+
+        <img id="imgMemoryCat" src="images/memory/cat.png" />
+        <img id="imgMemoryLion" src="images/memory/lion.png" />
+        <img id="imgMemorySnake" src="images/memory/snake.png" />
     </div>
 
     <div id="audioHost" style="display:none">
