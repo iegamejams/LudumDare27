@@ -58,6 +58,10 @@
     <!-- Memory Game-->
     <script src="js/Memory/MemoryGame.js" type="text/ecmascript"></script>
     <script src="js/Memory/CardSprite.js" type="text/ecmascript"></script>
+
+    <!-- Draw Something -->
+    <script src="js/DrawSomething/DrawSomethingGame.js" type="text/ecmascript"></script>
+    <script src="js/DrawSomething/PathSprite.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
@@ -90,8 +94,8 @@
                 help: "Click or Tap pairs of the same color.", titleImage: "imgSquare"
             },
             {
-                id: "nyancat", title: "Nyan Cat!!!", factory: NyanCatGame, instance: null, rootSprite: null,
-                help: "Enjoy an intermission!", titleImage: "imgSquare", isSkipCountdown: true
+                id: "draw", title: "Draw Something", factory: DrawSomethingGame, instance: null, rootSprite: null,
+                help: "You know how to draw right?", titleImage: "imgSquare"
             },
             /*
             {
