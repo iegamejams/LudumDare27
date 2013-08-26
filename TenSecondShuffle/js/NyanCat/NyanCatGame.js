@@ -97,7 +97,7 @@ NyanCatGame.prototype.constructor = NyanCatGame;
 
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
                 this.saveLevel = SoundManager.volumeMusic;
-                var newLevel = Math.max(0.5, this.saveLevel);
+                var newLevel = Math.min(0.2, this.saveLevel);
                 SoundManager.volumeMusic = newLevel;
                 SoundManager.playMusic("nyan");
             }

@@ -20,7 +20,14 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
     var _maxLevels = _levelDifficulty.length;
     var _clickHandler = function click(evt) {
         if (!this.popped) {
+            this.pumps++;
             this.area += _pumpArea;
+            if (this.pumps % 2 == 0) {
+                SoundManager.play("blow1");
+            }
+            else {
+                SoundManager.play("blow2");
+            }
         }
     }
 
@@ -48,6 +55,8 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
                         bubbleSprite.fill = "red";
                         bubbleSprite.stroke = "darkred";
                         this.popped = true;
+                        SoundManager.stopAll();
+                        SoundManager.play("pop");
                     }
                 }
             }
@@ -61,6 +70,7 @@ BubbleBlowerGame.prototype.constructor = BubbleBlowerGame;
                 this.radius = 0;
                 this.level = 0;
                 this.popped = false;
+                this.pumps = 0;
 
                 this.boundClick = _clickHandler.bind(this);
             }
