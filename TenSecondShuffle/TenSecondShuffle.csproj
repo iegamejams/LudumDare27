@@ -116,6 +116,7 @@
     <Content Include="sound\ready.mp3" />
     <Content Include="sound\set.mp3" />
     <Content Include="sound\tick.mp3" />
+    <Content Include="sound\time_twister_voiceover.mp3" />
     <Content Include="sound\tock.mp3" />
     <Content Include="unitTests\Math.htm" />
     <Content Include="Web.config" />

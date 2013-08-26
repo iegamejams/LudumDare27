@@ -71,7 +71,7 @@
             },
             {
                 id: "potterybarn", title: "Pottery Barn", factory: PotteryBarn, instance: null, rootSprite: null,
-                help: "Click shape boundaries to shape it!", titleImage: "imgSquare"
+                help: "Click outside to expand, or inside to shrink!", titleImage: "imgSquare"
             },
             {
                 id: "nyancat", title: "Nyan Cat!!!", factory: NyanCatGame, instance: null, rootSprite: null,
@@ -133,6 +133,36 @@
             // Builds out the base sprite tree which contains the background layers, game host and HUD.
             setupSpriteTree();
 
+            // Run our intro
+            intro();
+
+        }
+
+        // Try to play the intro if it fails don't block, let it keep going.
+        function intro() {
+            var introSound = document.getElementById("intro");
+
+            introSound.addEventListener("ended", startGame);
+            introSound.addEventListener("error", startGame);
+            window.addEventListener("click", startGame);
+
+            try {
+                introSound.play();
+            } catch (exc) {
+                startGame();
+            }
+        }
+
+        function startGame() {
+            var introSound = document.getElementById("intro");
+
+            introSound.currentTime = 0;
+            introSound.pause();
+            window.removeEventListener("click", startGame);
+            setTimeout(delayedStartGame, 1000);
+        }
+
+        function delayedStartGame() {
             requestAnimationFrame(render);
         }
 
@@ -224,6 +254,7 @@
     <div id="audioHost" style="display:none">
         <div id="music">
             <audio id="nyan" src="sound\nyanlooped.mp3" preload="none"></audio>
+            <audio id="intro" src="sound\time_twister_voiceover.mp3" preload="auto"></audio>
         </div>
         <div id="sfx">
             <!-- Game Host Sounds -->
