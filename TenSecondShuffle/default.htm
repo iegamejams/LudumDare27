@@ -10,6 +10,9 @@
     <script src="js/Math.js" type="text/ecmascript"></script>
     <script src="js/GlobalRuleSet.js" type="text/ecmascript"></script>
 
+    <!-- Sound Manager -->
+    <script src="js/SoundManager.js" type="text/ecmascript"></script>
+
     <!-- Graphics Engine and Sprite Tree -->
     <script src="js/DrawingContext2D.js" type="text/ecmascript"></script>
     <script src="js/Sprite.js" type="text/ecmascript"></script>
@@ -21,6 +24,8 @@
     <script src="js/DashedCircleSprite.js" type="text/ecmascript"></script>
     <script src="js/TextSprite.js" type="text/ecmascript"></script>
     <script src="js/OverlaySprite.js" type="text/ecmascript"></script>
+    <script src="js/FillSprite.js" type="text/ecmascript"></script>
+    <script src="js/AnimatedFrameSprite.js" type="text/ecmascript"></script>
 
     <!-- Game Common -->
     <script src="js/Game.js" type="text/ecmascript"></script>
@@ -38,6 +43,9 @@
 
     <!-- Tap Target Game -->
     <script src="js/TapTarget/TapTargetGame.js" type="text/ecmascript"></script>
+
+    <!-- Nyan Cat -->
+    <script src="js/NyanCat/NyanCatGame.js" type="text/ecmascript"></script>
     
     <script>
         var games = [
@@ -48,6 +56,10 @@
             {
                 id: "clickseq", title: "Click Sequence", factory: ClickSequenceGame, instance: null, rootSprite: null,
                 help: "Select the targets in increasing order.", titleImage: "imgSquare"
+            },
+            {
+                id: "nyancat", title: "Nyan Cat!!!", factory: NyanCatGame, instance: null, rootSprite: null,
+                help: "Enjoy an intermission!", titleImage: "imgSquare"
             },
             {
                 id: "bubbleblow", title: "Bubble Blower", factory: BubbleBlowerGame, instance: null, rootSprite: null,
@@ -86,6 +98,7 @@
 
         function init() {
             applyRules();
+            SoundManager.setupAudio("audioHost", "music", "sfx");
 
             drawingContext = new DrawingContext2D(document.getElementById("renderTarget"));
 
@@ -171,6 +184,18 @@
     <div style="display: none">
         <img id="imgSquare" src="images/stock/square.png" />
         <img id="imgClockHand" src="images/background_layer/clock_hand.png" />
+        <img id="imgNyanSprite" src="images/nyan-cat.png" />
+        <img id="imgNyanStarSprite" src="images/nyan-star.png" />
+        <img id="imgNyanRainbowSprite" src="images/nyan-rainbow.png" />
+    </div>
+
+    <div id="audioHost" style="display:none">
+        <div id="music">
+            <audio id="nyan" src="sound\nyanlooped.mp3" preload="none" />
+        </div>
+        <div id="sfx">
+
+        </div>
     </div>
 </body>
 </html>

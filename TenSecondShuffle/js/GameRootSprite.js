@@ -17,6 +17,7 @@ Object.defineProperties(GameRootSprite.prototype, {
             if (this.gameObject) {
                 this.gameObject.update();
             }
+            Sprite.prototype.update.call(this);
         }
     },
     init: {
@@ -47,7 +48,6 @@ Object.defineProperties(GameRootSprite.prototype, {
 
     activate: {
         value: function activate(activationContext) {
-            console.log("Activated: " + this.gameObject.constructor);
             this.activated = true;
             if (this.gameObject) {
                 this.gameObject.activate(activationContext);
