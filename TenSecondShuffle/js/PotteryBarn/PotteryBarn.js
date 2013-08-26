@@ -41,37 +41,43 @@ PotteryBarn.prototype.constructor = PotteryBarn;
                 this.boundClick = _clickHandler.bind(this);
             }
         },
-
+        inputActivate: {
+            value: function inputActivate(activationContext) {
+                activationContext.renderTargetElement.addEventListener("click", this.boundClick);
+            }
+        },
         activate: {
             value: function activate(activationContext) {
                 this.level++;
                 var normalizedLevelDifficulty = Math.min(this.level - 1, _maxLevels - 1);
                 this.levelDescriptor = _levelDifficulty[normalizedLevelDifficulty];
 
-                this.area = 0;
                 var claySprite = new ClaySprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY);
 
-                claySprite.addSymmetricalPoint(1, 0);
-                claySprite.addSymmetricalPoint(1, 1);
-                claySprite.addSymmetricalPoint(1, 2);
+                var step = 1;
+                if (this.level > 3)
+                    step = 2;
+                else if (this.level > 6)
+                    step = 3;
+
+                for( var i = 0; i < 3; i += 1 / step)
+                    claySprite.addSymmetricalPoint(1, i);
 
                 claySprite.generateTargetShape();
 
                 claySprite.lineWidth = 3;
                 this.rootSprite.addNamedChild("claySprite", claySprite);
-
-
-
-                activationContext.renderTargetElement.addEventListener("click", this.boundClick);
             }
         },
         deactivate: {
             value: function deactivate(activationContext) {
                 activationContext.renderTargetElement.removeEventListener("click", this.boundClick);
 
+                console.log(this.rootSprite.claySprite.getAverageDistToTarget());
+
                 // Determine if the player won or lost
                 var canContinue = false;
-                if (this.rootSprite.claySprite.MatchPercentageToTarget() > .8) {
+                if (this.rootSprite.claySprite.getAverageDistToTarget() < 5) {
                     canContinue = true;
                 }
 
