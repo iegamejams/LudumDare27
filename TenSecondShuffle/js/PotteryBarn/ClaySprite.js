@@ -18,7 +18,7 @@ function ClaySprite(x, y) {
     this.scl = 80;
 
     this.interp = .1;
-    this.influenceDistance = 40;
+    this.influenceDistance = this.scl * .4;
 
     this.minX = 0, this.maxX = 0,
     this.minY = 0, this.maxY = 0;
@@ -108,11 +108,10 @@ Object.defineProperties(ClaySprite.prototype, {
     },
     updateTouch: {
         value: function updateTouch(x, y) {
-            var mx = GlobalRuleSet.GameCenterX - x,
-                my = GlobalRuleSet.GameCenterY - y;
 
-            var scl = this.scl,
-                distToCenterX = 0, distToCenterY = 0, distToCenter = 0,
+            console.log(this.getAverageDistToTarget());
+
+            var distToCenterX = 0, distToCenterY = 0, distToCenter = 0,
                 distToPointX = 0, distToPointY = 0, distToPoint = 0,
                 posX = 0, posY = 0;
 
@@ -149,9 +148,17 @@ Object.defineProperties(ClaySprite.prototype, {
             }
         }
     },
-    MatchPercentageToTarget: {
-        value: function MatchPercentageToTarget() {
-            return true;
+    getAverageDistToTarget: {
+        value: function getAverageDistToTarget() {
+            var distX = 0, distY = 0, dist = 0, distSum = 0;
+
+            for (var i = 0; i < this.points.length; ++i) {
+                distX = this.points[i].x - this.targetPoints[i].x;
+                distY = this.points[i].y - this.targetPoints[i].y;
+                dist = Math.sqrt(distX * distX + distY * distY);
+                distSum += dist;
+            }
+            return (distSum / this.points.length);
         }
     }
 });
