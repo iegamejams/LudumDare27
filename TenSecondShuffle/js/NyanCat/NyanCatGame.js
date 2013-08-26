@@ -70,6 +70,16 @@ NyanCatGame.prototype.constructor = NyanCatGame;
             value: function activate(activationContext) {
                 Game.prototype.activate.call(this, activationContext);
 
+                
+                
+                
+            }
+        },
+        inputActivate: {
+            value: function inputActivate(activationContext) {
+                Game.prototype.inputActivate.call(this, activationContext);
+
+                // Setup sprites.
                 this.starSprites = [];
                 this.rainbowSprites = [];
 
@@ -94,15 +104,12 @@ NyanCatGame.prototype.constructor = NyanCatGame;
                     this.rainbowSprites.push(rainbowSprite);
                     rainBowOffset -= 9;
                 }
-                
+
                 this.rootSprite.addChild(this.nyanSprite);
-            }
-        },
-        inputActivate: {
-            value: function inputActivate(activationContext) {
-                Game.prototype.inputActivate.call(this, activationContext);
 
                 activationContext.renderTargetElement.addEventListener("click", this.boundClick);
+
+                // Setup Music.
                 this.saveLevel = SoundManager.volumeMusic;
                 var newLevel = Math.min(0.2, this.saveLevel);
                 SoundManager.volumeMusic = newLevel;

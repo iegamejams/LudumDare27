@@ -57,6 +57,10 @@ GameHostSprite.prototype.constructor = GameHostSprite;
 
                 // Add them into the tree
                 this.mainPivot.addChild(gamePivotSprite);
+
+                gamePivotSprite.isSkipCountdown =
+                    ((typeof gameDescriptor.isSkipCountdown === "boolean") ? gameDescriptor.isSkipCountdown : false);
+
                 gamePivotSprite.addChild(gameAlignerSprite);
                 gameAlignerSprite.addChild(gameDescriptor.rootSprite);
 
@@ -101,7 +105,10 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                                     }
                                     else {
                                         this.mainPivot.children[this.currentGame].rotation = 0;
-                                        this.transitionTo(HostState.COUNTDOWN);
+                                        if (!this.mainPivot.children[this.currentGame].isSkipCountdown)
+                                            this.transitionTo(HostState.COUNTDOWN);
+                                        else
+                                            this.transitionTo(HostState.GAMERUNNING);
                                     }
                                 }
                                 else {
@@ -120,7 +127,10 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         {
                             var currentRotation = Math.max(this.targetArc, this.mainPivot.rotation - GlobalRuleSet.ClockRotation * .1);
                             if (this.targetArc == currentRotation) {
-                                this.transitionTo(HostState.COUNTDOWN);
+                                if (!this.mainPivot.children[this.currentGame].isSkipCountdown)
+                                    this.transitionTo(HostState.COUNTDOWN);
+                                else
+                                    this.transitionTo(HostState.GAMERUNNING);
                             }
                             this.clockPivot.rotation -= GlobalRuleSet.ClockRotation * .1;
                             this.mainPivot.rotation = currentRotation;
