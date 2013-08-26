@@ -38,6 +38,11 @@
 
     <!-- Tap Target Game -->
     <script src="js/TapTarget/TapTargetGame.js" type="text/ecmascript"></script>
+
+    <!-- Shape Molding Game -->
+    <script src="js/PotteryBarn/ClaySprite.js" type="text/ecmascript"></script>
+    <script src="js/PotteryBarn/PotteryBarn.js" type="text/ecmascript"></script>
+
     
     <script>
         var games = [
@@ -56,6 +61,10 @@
             {
                 id: "colorpair", title: "Color Pair", factory: ColorPairGame, instance: null, rootSprite: null,
                 help: "Click or Tap pairs of the same color.", titleImage: "imgSquare"
+            },
+            {
+                id: "potterybarn", title: "Pottery Barn", factory: PotteryBarn, instance: null, rootSprite: null,
+                help: "Click shape boundaries to shape it!", titleImage: "imgSquare"
             },
         ];
 
