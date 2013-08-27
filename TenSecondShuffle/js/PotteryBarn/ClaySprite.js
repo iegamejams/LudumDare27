@@ -42,14 +42,16 @@ Object.defineProperties(ClaySprite.prototype, {
             ctx.stroke();
 
             // Draw Clay.
-            this.drawSprite(this.points, this.fill);
+            this.drawSprite(this.points, this.fill, "solid", true);
 
             // Draw Target Shape.
             this.drawSprite(this.targetPoints, null, (this.getAverageDistToTarget() < 5? "green" : "red"));
         }
     },
     drawSprite: {
-        value: function drawSprite(points, fill, stroke) {
+        value: function drawSprite(points, fill, stroke, areControlPointsDisplayed) {
+            if ((typeof areControlPointsDisplayed === 'undefined'))
+                areControlPointsDisplayed = false;
             var ctx = drawingContext.ctx;
             // Draw Clay section
             ctx.beginPath();
@@ -57,11 +59,12 @@ Object.defineProperties(ClaySprite.prototype, {
             ctx.moveTo(-points[0].x, points[0].y);
             ctx.lineTo(points[0].x, points[0].y);
 
-            for (var i = 0; i < this.points.length; ++i) {
+            for (var i = 0; i < points.length; ++i) {
                 if(points[i].targetX)
                     points[i].x += (points[i].targetX - points[i].x) * this.interp + Math.random() * 2;
                 ctx.lineTo(points[i].x, points[i].y);
             }
+
             // Left side of the clay mold.
             for (var i = points.length - 1; i > -1; --i) {
                 if (points[i].targetX)
@@ -81,6 +84,23 @@ Object.defineProperties(ClaySprite.prototype, {
             if (stroke) {
                 ctx.strokeStyle = stroke;
                 ctx.stroke();
+            }
+
+            if (areControlPointsDisplayed) {
+                ctx.strokeStyle = "rgba(0, 150, 220, 0.1)";
+                ctx.fillStyle = "rgba(220, 0, 220, 0.1)";
+                for (var i = 0; i < points.length; ++i) {
+                    ctx.beginPath();
+                    ctx.arc(points[i].x, points[i].y, this.influenceDistance * .4, 0, 2 * Math.PI, false);
+                    ctx.stroke();
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(-points[points.length - i - 1].x, points[points.length - i - 1].y, this.influenceDistance * .4, 0, 2 * Math.PI, false);
+                    ctx.stroke();
+                    ctx.fill();
+
+                }
             }
         }
     }
@@ -128,7 +148,7 @@ Object.defineProperties(ClaySprite.prototype, {
                    (distToPointX < this.influenceDistance || 
                     this.isInSprite(x,y) ))
                     if (distToCenterX < posX)
-                        this.points[i].targetX += (distToPoint * .2);
+                        this.points[i].targetX += (distToPoint * .4);
                     else if (distToCenterX < posX * 1.4)
                         this.points[i].targetX -= (distToPoint * .4);
             }

@@ -9,7 +9,7 @@ Object.defineProperties(this, {
                     value: 60
                 },
                 GAME_SWITCH_FRAMES: {
-                    value: 60 * 10 // 60 frames times 10 seconds
+                    value: 60 * 100 // 60 frames times 10 seconds
                 },
                 GameHostHeight: {
                     value: 768
@@ -49,7 +49,7 @@ Object.defineProperties(this, {
                     value: false
                 },
                 Debug: {
-                    value: false
+                    value: true
                 },
                 isTouchDevice:{ 
                     value: 'ontouchstart' in document.documentElement
