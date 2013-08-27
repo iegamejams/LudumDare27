@@ -120,14 +120,20 @@ DriverRing.prototype.constructor = DriverRing;
                 this.cntGreens = 0;
 
                 // Add rings.
-                this.radius = this.level * 40;
+                this.radius = 40;
                 var diameter = this.radius * 2;
                 this.diameter = diameter;
+                
+                var cnt = 0;
+                if (this.level < 7)
+                    cnt = this.level + 3;
+                else if (this.level < 15)
+                    cnt = this.level;
 
-                for (var i = 0; i < this.level * 3; ++i) {
-                    var angle = (i / this.level) * Math.PI;
-                    var x = GlobalRuleSet.GameCenterX + (Math.cos(angle) * GlobalRuleSet.GameWidth * .25) - this.radius,
-                        y = GlobalRuleSet.GameCenterY + (Math.sin(angle) * GlobalRuleSet.GameHeight * .25) - this.radius;
+                for (var i = 0; i < cnt; ++i) {
+                    var angle = (i / cnt) * Math.PI * 2;
+                    var x = GlobalRuleSet.GameCenterX + (Math.cos(angle) * GlobalRuleSet.GameWidth * (Math.random() * .25 + .1)) - this.radius,
+                        y = GlobalRuleSet.GameCenterY + (Math.sin(angle) * GlobalRuleSet.GameHeight * (Math.random() * .25 + .1)) - this.radius;
 
                     var targetSprite = new DashedCircleSprite(x, y, this.radius);
                     targetSprite.fill = "transparent";
