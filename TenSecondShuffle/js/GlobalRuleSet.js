@@ -49,7 +49,7 @@ Object.defineProperties(this, {
                     value: false
                 },
                 Debug: {
-                    value: true
+                    value: false
                 },
                 isTouchDevice:{ 
                     value: 'ontouchstart' in document.documentElement
