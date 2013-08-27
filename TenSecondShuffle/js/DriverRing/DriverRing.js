@@ -44,7 +44,7 @@ DriverRing.prototype.constructor = DriverRing;
                 }
 
                 if (Math.distance2d(this.v2Target[0], this.v2Target[1],
-                                    this.rootSprite.carSprite.x, this.rootSprite.carSprite.y) < this.rootSprite.carSprite.scl * 2)
+                                    this.rootSprite.carSprite.x, this.rootSprite.carSprite.y) < this.radius)
                     this.vel = 0;
 
                     // Acceleration.
@@ -86,8 +86,6 @@ DriverRing.prototype.constructor = DriverRing;
 
                 this.accelStep = .51;
                 this.accelMax = 5;
-
-                
             }
         },
 
@@ -113,15 +111,15 @@ DriverRing.prototype.constructor = DriverRing;
                 this.cntGreens = 0;
 
                 // Add rings.
-                var radius = this.level * 40,
-                    diameter = radius * 2;
+                this.radius = this.level * 40;
+                var diameter = this.radius * 2;
 
                 for (var i = 0; i < this.level * 3; ++i) {
                     var angle = (i / this.level) * Math.PI;
-                    var x = GlobalRuleSet.GameCenterX + (Math.cos(angle) * GlobalRuleSet.GameWidth * .25) - radius,
-                        y = GlobalRuleSet.GameCenterY + (Math.sin(angle) * GlobalRuleSet.GameHeight * .25) - radius;
+                    var x = GlobalRuleSet.GameCenterX + (Math.cos(angle) * GlobalRuleSet.GameWidth * .25) - this.radius,
+                        y = GlobalRuleSet.GameCenterY + (Math.sin(angle) * GlobalRuleSet.GameHeight * .25) - this.radius;
 
-                    var targetSprite = new DashedCircleSprite(x, y, radius);
+                    var targetSprite = new DashedCircleSprite(x, y, this.radius);
                     targetSprite.fill = "transparent";
                     targetSprite.stroke = "red";
                     this.rootSprite.addNamedChild("targetSprite" + i, targetSprite);
