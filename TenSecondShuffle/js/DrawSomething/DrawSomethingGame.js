@@ -8,15 +8,23 @@ DrawSomethingGame.prototype = Object.create(Game.prototype);
 DrawSomethingGame.prototype.constructor = DrawSomethingGame;
 
 (function initialization_DrawSomethingGame() {
+    var _colors = [ "black", "red", "blue", "green", "pink", "purple" ];
 
     var _listening = false;
     function _downHandler(evt) {
-        _listening = true;
+        _listening = false;
 
-        var pathSprite = new PathSprite(0, 0, "black");
-        pathSprite.addPoint({ x: evt.offsetX, y: evt.offsetY });
-        this.paths.push(pathSprite);
-        this.rootSprite.addChild(pathSprite);
+        var hitSprite = this.rootSprite.hitTestSquare(evt.offsetX, evt.offsetY, 20);
+        if (hitSprite && hitSprite instanceof FillSprite) {
+            this.color = hitSprite.fill;
+        }
+        else {
+            _listening = true;
+            var pathSprite = new PathSprite(0, 0, this.color);
+            pathSprite.addPoint({ x: evt.offsetX, y: evt.offsetY });
+            this.paths.push(pathSprite);
+            this.rootSprite.addChild(pathSprite);
+        }
     }
     function _upHandler(evt) {
         _moveHandler.call(this, evt);
@@ -47,6 +55,10 @@ DrawSomethingGame.prototype.constructor = DrawSomethingGame;
                 this.boundDown = _downHandler.bind(this);
                 this.boundMove = _moveHandler.bind(this);
                 this.boundUp = _upHandler.bind(this);
+
+                for (var i = 0; i < _colors.length; i++) {
+                    this.rootSprite.addChild(new FillSprite(GlobalRuleSet.GameMinX + 20, GlobalRuleSet.GameMinY + 20 + i * 40, 30, 30, _colors[i]));
+                }
             }
         },
 
@@ -64,6 +76,8 @@ DrawSomethingGame.prototype.constructor = DrawSomethingGame;
                 activationContext.renderTargetElement.addEventListener("mousedown", this.boundDown);
                 activationContext.renderTargetElement.addEventListener("mousemove", this.boundMove);
                 activationContext.renderTargetElement.addEventListener("mouseup", this.boundUp);
+
+                this.color = "black";
             }
         },
         deactivate: {

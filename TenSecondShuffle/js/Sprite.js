@@ -110,11 +110,19 @@ Object.defineProperties(Sprite.prototype, {
             var childCount = this.children.length;
             for (var i = childCount - 1; i >= 0; i--) {
                 var child = this.children[i];
-                if ((child.x - halfWidth) <= x &&
-                    (child.x + halfWidth) >= x &&
-                    (child.y - halfWidth) <= y &&
-                    (child.y + halfWidth) >= y) {
-                    return child;
+
+                if (typeof child.hitTest === "function") {
+                    if (child.hitTest(x, y)) {
+                        return child;
+                    }
+                }
+                else {
+                    if ((child.x - halfWidth) <= x &&
+                        (child.x + halfWidth) >= x &&
+                        (child.y - halfWidth) <= y &&
+                        (child.y + halfWidth) >= y) {
+                        return child;
+                    }
                 }
             }
             return null;
