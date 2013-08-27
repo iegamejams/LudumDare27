@@ -18,7 +18,6 @@ DriverRing.prototype.constructor = DriverRing;
 
             // Acceleration.
             this.accel += this.accelStep;
-            if (this.accel >= this.accelMax) this.accel = this.accelMax;
 
             // Direction.
             var mX = mouseX,
@@ -28,6 +27,8 @@ DriverRing.prototype.constructor = DriverRing;
             this.v2Dir[1] = mY - this.rootSprite.carSprite.y;
 
             this.rot = Math.atan2(this.v2Dir[1], this.v2Dir[0]);
+
+            this.isTargetReached = false;
         }
     }
 
@@ -44,36 +45,41 @@ DriverRing.prototype.constructor = DriverRing;
                 }
 
                 if (Math.distance2d(this.v2Target[0], this.v2Target[1],
-                                    this.rootSprite.carSprite.x, this.rootSprite.carSprite.y) < this.radius)
-                    this.vel = 0;
+                                    this.rootSprite.carSprite.x, this.rootSprite.carSprite.y) < this.rootSprite.carSprite.scl * 2)
+                    this.isTargetReached = true;
 
-                    // Acceleration.
-                    this.vel += this.accel;
+                if(this.isTargetReached)
+                    this.accel -= this.accelStep * 1.8;
 
-                    this.accel -= this.accelStep * .1;
-                    if (this.accel <= this.accelMax) this.accel = 0;
+                this.vel += this.accel;
 
-                    this.rotCur += (this.rot - this.rotCur) * .5;
+                if (this.vel >= this.velMax) this.vel = this.velMax;
+                else if (this.vel <= 0) this.vel = 0;
 
-                    this.v2Dir[0] = Math.cos(this.rotCur);
-                    this.v2Dir[1] = Math.sin(this.rotCur);
+                if (this.accel >= this.accelMax) this.accel = this.accelMax;
+                else if (this.accel <= 0) this.accel = 0;
 
-                    this.rootSprite.carSprite.x += this.vel * this.v2Dir[0]
-                    this.rootSprite.carSprite.y += this.vel * this.v2Dir[1];
+                this.rotCur += (this.rot - this.rotCur) * .5;
 
-                    this.rootSprite.carSprite.setRotation(this.rotCur + Math.PI * .5);
+                this.v2Dir[0] = Math.cos(this.rotCur);
+                this.v2Dir[1] = Math.sin(this.rotCur);
 
-                    // Make Rings Green.
-                    this.cntGreens = 0;
-                    for (var i = 0; i < this.rings.length; ++i) {
+                this.rootSprite.carSprite.x += this.vel * this.v2Dir[0]
+                this.rootSprite.carSprite.y += this.vel * this.v2Dir[1];
 
-                        if (this.rings[i].sprite.stroke !== "green") {
-                            if (Math.distance2d(this.rings[i].x, this.rings[i].y,
-                                         this.rootSprite.carSprite.x, this.rootSprite.carSprite.y) < this.rootSprite.carSprite.scl)
-                                this.rings[i].sprite.stroke = "green";
-                        } else
-                            this.cntGreens++;
-                    }
+                this.rootSprite.carSprite.setRotation(this.rotCur + Math.PI * .5);
+
+                // Make Rings Green.
+                this.cntGreens = 0;
+                for (var i = 0; i < this.rings.length; ++i) {
+
+                    if (this.rings[i].sprite.stroke !== "green") {
+                        if (Math.distance2d(this.rings[i].x, this.rings[i].y,
+                                        this.rootSprite.carSprite.x, this.rootSprite.carSprite.y) < this.rootSprite.carSprite.scl * 2)
+                            this.rings[i].sprite.stroke = "green";
+                    } else
+                        this.cntGreens++;
+                }
             }
         },
 
@@ -84,14 +90,17 @@ DriverRing.prototype.constructor = DriverRing;
 
                 this.boundClick = _clickHandler.bind(this);
 
-                this.accelStep = .51;
+                this.accelStep = .2;
                 this.accelMax = 5;
+                this.velMax = 5;
             }
         },
 
         activate: {
             value: function activate(activationContext) {
                 this.level++;
+
+                this.isTargetReached = false;
 
                 // Initialize
                 this.rot = 0;
@@ -113,6 +122,7 @@ DriverRing.prototype.constructor = DriverRing;
                 // Add rings.
                 this.radius = this.level * 40;
                 var diameter = this.radius * 2;
+                this.diameter = diameter;
 
                 for (var i = 0; i < this.level * 3; ++i) {
                     var angle = (i / this.level) * Math.PI;
