@@ -163,8 +163,12 @@
             var titles = document.getElementById("titles");
             titles.style.display = "none";
 
-            introSound.currentTime = 0;
-            introSound.pause();
+            try {
+                introSound.pause();
+                introSound.currentTime = 0;
+            } catch (exc) {
+            }
+
             window.removeEventListener("click", startGame);
             setTimeout(delayedStartGame, 1000);
         }

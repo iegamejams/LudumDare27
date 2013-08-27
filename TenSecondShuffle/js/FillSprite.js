@@ -19,5 +19,13 @@ Object.defineProperties(FillSprite.prototype, {
             ctx.fillStyle = this.fill;
             ctx.fillRect(0, 0, this.width, this.height);
         }
-    }
+    },
+    hitTest: {
+        value: function hitTest(x, y) {
+            if (x >= this.x && x <= (this.x + this.width) && y >= this.y && y <= (this.y + this.height)) {
+                return true;
+            }
+            return false;
+        }
+    },
 });
