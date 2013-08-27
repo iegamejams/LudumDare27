@@ -67,6 +67,7 @@ DrawSomethingGame.prototype.constructor = DrawSomethingGame;
                 Game.prototype.activate.call(this, activationContext);
 
                 this.paths = [];
+                this.level++;
             }
         },
         inputActivate: {
