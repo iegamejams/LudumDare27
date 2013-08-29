@@ -17,6 +17,16 @@ Object.defineProperties(GameRootSprite.prototype, {
             }
             Sprite.prototype.update.call(this);
             this.updateScore();
+            if (this.gameObject.earlyWin) {
+                this.gameObject.bonusFrames++;
+
+                var n = this.gameObject.bonusFrames;
+                var ratio = 10 / this.gameObject.level;
+                var n_1 = 1 / ratio;
+
+                this.gameObject.bonusScore = Math.floor((n / 2) * (n / ratio + n_1));
+                this.winOverlay.bonus.changeText(this.gameObject.bonusScore.toString());
+            }
         }
     },
     updateScore: {
@@ -42,8 +52,13 @@ Object.defineProperties(GameRootSprite.prototype, {
             this.helpSprite = new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.HelpTitleY, this.gameObject.help, GlobalRuleSet.HelpTitleFont);
             this.winOverlay = new OverlaySprite("transparent");
 
-            this.winOverlay.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 50, GlobalRuleSet.GameCenterY - 20, 100, 50, "beige"));
+            this.winOverlay.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY - 20, 300, 50, "beige"));
             this.winOverlay.addChild(new TextSprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY, "Winner!", "bold 18pt Calibri"));
+            this.winOverlay.addChild(new FillSprite(GlobalRuleSet.GameCenterX - 150, GlobalRuleSet.GameCenterY + 40, 300, 50, "beige"));
+            this.winOverlay.addNamedChild("bonusTitle", new TextSprite(GlobalRuleSet.GameCenterX - 130, GlobalRuleSet.GameCenterY + 60, "Bonus Score:", GlobalRuleSet.UIFont));
+            this.winOverlay.bonusTitle.alignment = "left";
+            this.winOverlay.addNamedChild("bonus", new TextSprite(GlobalRuleSet.GameCenterX + 130, GlobalRuleSet.GameCenterY + 60, "", GlobalRuleSet.UIFont));
+            this.winOverlay.bonus.alignment = "right";
 
             if (this.gameObject.showLevel) {
                 this.levelSprite = new TextSprite(GlobalRuleSet.GameMinX + 20, GlobalRuleSet.TitleY, "", GlobalRuleSet.UIFont);

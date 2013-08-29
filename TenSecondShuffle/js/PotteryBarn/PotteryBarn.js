@@ -25,16 +25,9 @@ PotteryBarn.prototype.constructor = PotteryBarn;
     }
 
     Object.defineProperties(PotteryBarn.prototype, {
-        showWinOverlay: {
-            value: true
-        },
         update: {
             value: function update() {
-                // Shape grading.
-                if (this.rootSprite.claySprite.getAverageDistToTarget() < 4) {
-                    this.isShapeMatched = true;
-                    this.earlyWin = true;
-                }
+                this.isShapeMatched = (this.rootSprite.claySprite.getAverageDistToTarget() < 4);
             }
         },
 
@@ -43,9 +36,7 @@ PotteryBarn.prototype.constructor = PotteryBarn;
                 Game.prototype.init.call(this, gameDescriptor);
 
                 this.level = 0;
-
                 this.boundClick = _clickHandler.bind(this);
-
                 this.isShapeMatched = false;
             }
         },
@@ -58,6 +49,8 @@ PotteryBarn.prototype.constructor = PotteryBarn;
         },
         activate: {
             value: function activate(activationContext) {
+                Game.prototype.activate.call(this, activationContext);
+
                 this.level++;
                 var claySprite = new ClaySprite(GlobalRuleSet.GameCenterX, GlobalRuleSet.GameCenterY);
 
@@ -83,8 +76,13 @@ PotteryBarn.prototype.constructor = PotteryBarn;
         },
         deactivate: {
             value: function deactivate(activationContext) {
+                Game.prototype.deactivate.call(this, activationContext);
+
                 activationContext.renderTargetElement.removeEventListener("click", this.boundClick);
                 activationContext.renderTargetElement.removeEventListener("touchstart", this.boundClick);
+
+                // Shape grading.
+                this.isShapeMatched = (this.rootSprite.claySprite.getAverageDistToTarget() < 4);
 
                 // Determine if the player won or lost
                 var canContinue = false;

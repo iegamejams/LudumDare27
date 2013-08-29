@@ -40,6 +40,8 @@ Object.defineProperties(Game.prototype, {
         value: function activate() {
             this.activated = true;
             this.earlyWin = false;
+            this.bonusFrames = 0;
+            this.bonusScore = 0;
             // Long running games will likely have additional state controlling where they are in the game.
             // Short running games will want to initialize their next level here.
         }
@@ -55,6 +57,7 @@ Object.defineProperties(Game.prototype, {
             this.earlyWin = false;
             this.activated = false;
             this.inputActivated = false;
+            this.score += this.bonusScore;
 
             // Long running games will likely ignore this state.
             // Short running games will clean up any resources they've allocated.

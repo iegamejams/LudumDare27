@@ -122,10 +122,7 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                                     }
                                     else {
                                         this.mainPivot.children[this.currentGame].rotation = 0;
-                                        if (!this.mainPivot.children[this.currentGame].isSkipCountdown)
-                                            this.transitionTo(HostState.COUNTDOWN);
-                                        else
-                                            this.transitionTo(HostState.GAMERUNNING);
+                                        this.transitionTo(HostState.COUNTDOWN);
                                     }
                                 }
                                 else {
@@ -144,10 +141,7 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                         {
                             var currentRotation = Math.max(this.targetArc, this.mainPivot.rotation - GlobalRuleSet.ClockRotation * .1);
                             if (this.targetArc == currentRotation) {
-                                if (!this.mainPivot.children[this.currentGame].isSkipCountdown)
-                                    this.transitionTo(HostState.COUNTDOWN);
-                                else
-                                    this.transitionTo(HostState.GAMERUNNING);
+                                this.transitionTo(HostState.COUNTDOWN);
                             }
                             this.clockPivot.rotation -= GlobalRuleSet.ClockRotation * .1;
                             this.mainPivot.rotation = currentRotation;
@@ -156,20 +150,7 @@ GameHostSprite.prototype.constructor = GameHostSprite;
 
                     case HostState.COUNTDOWN:
                         {
-                            var countdownTime = 3 - Math.floor((new Date() - this.startCountdownTimer) / 1000);
-                            if (countdownTime <= 0) {
-                                this.transitionTo(HostState.GAMERUNNING);
-                            }
-                            else if (this.countdownTime !== countdownTime) {
-                                if (countdownTime === 2) {
-                                    SoundManager.play("set");
-                                }
-                                if (countdownTime === 1) {
-                                    SoundManager.play("go");
-                                }
-                                this.countdownTime = countdownTime;
-                                this.countdownTimer.timer.changeText(countdownTime + "...");
-                            }
+                            this.transitionTo(HostState.GAMERUNNING);
                         }
                         break;
                     case HostState.GAMEOVER:
@@ -184,13 +165,10 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                 switch (newState) {
                     case HostState.COUNTDOWN:
                         {
-                            this.startCountdownTimer = new Date();
                             this.clockPivot.rotation = -(GlobalRuleSet.ClockRotation * 5);
 
                             var nextGame = (this.currentGame + 1) % this.mainPivot.children.length;
                             this.mainPivot.children[nextGame].rotation = -(this.mainPivot.rotation - GlobalRuleSet.ClockRotation * 10);
-
-                            SoundManager.play("ready");
                         }
                         break;
                     case HostState.GAMERUNNING:
@@ -241,9 +219,9 @@ GameHostSprite.prototype.constructor = GameHostSprite;
                             this.clockPivot.draw(drawingContext);
                             this.drawGameCore(drawingContext);
 
-                            if (this.state === HostState.COUNTDOWN) {
-                                this.drawCountdownTimer(drawingContext);
-                            }
+                            //if (this.state === HostState.COUNTDOWN) {
+                            //    this.drawCountdownTimer(drawingContext);
+                            //}
 
                             drawingContext.popTransform();
                         }

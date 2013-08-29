@@ -42,7 +42,7 @@ ColorPairGame.prototype.constructor = ColorPairGame;
                     hitSprite = null;
 
                     if (this.rootSprite.children.length === 0) {
-                        this.earlyWin;
+                        this.earlyWin = true;
                     }
                 }
                 else {
@@ -76,6 +76,8 @@ ColorPairGame.prototype.constructor = ColorPairGame;
 
         activate: {
             value: function activate(activationContext) {
+                Game.prototype.activate.call(this, activationContext);
+
                 this.level++;
                 var normalizedLevelDifficulty = Math.min(this.level - 1, _maxLevels - 1);
                 var levelDescriptor = _levelDifficulty[normalizedLevelDifficulty];
@@ -102,6 +104,8 @@ ColorPairGame.prototype.constructor = ColorPairGame;
         },
         deactivate: {
             value: function deactivate(activationContext) {
+                Game.prototype.deactivate.call(this, activationContext);
+
                 activationContext.renderTargetElement.removeEventListener("click", this.boundClick);
 
                 // Determine if the player won or lost
